@@ -26,7 +26,7 @@ const ActivityCreate = () => {
                     <option value="Hunting">Hunting  </option>
                     <option value="Excursion">Excursion </option>
                 </select>
-                </div>
+                </div>  
             </div>
 
             <div className='col-12 col-md-6 col-lg-6'>
@@ -56,7 +56,7 @@ const ActivityCreate = () => {
                     <input type="text" className="form-control pt-xl-2 p-lg-4 pb-xl-5 mb-3 " id="Info" placeholder="Enter Info" />  
                 </div>  
             </div> 
-            
+
             <div className='col-12 col-md-6 d-flex flex-row flex wrap'>
                 <div className=' pt-4 pe-3'>
                 <input type="checkbox" className="form-check-input mt-4" id="checklist" />
