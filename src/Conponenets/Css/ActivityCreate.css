@@ -1,8 +1,44 @@
 .SaveBtn{
-    background-color: #3f493b;
+    background-color: #3f493b !important;
+    color: #ffffff !important;
+   
 }
+
 .CancelBtn{
-    color:  #3f493b ;
-    /* border: 3px solid  #3f493b; */
-    
+    color:  #3f493b !important;
+    border: 3px solid  #3f493b; 
+}
+
+.ActivityType{
+    border: 1px solid #dee2e6;  
+}
+
+.SaveBtn:hover{
+    background-color: #ffffff !important;
+    color:  #3f493b !important;
+}
+
+.CancelBtn:hover{
+    color:  #ffffff !important;
+    background-color: #3f493b !important;
+}
+form.input{
+    padding: 10px !important;
+}
+
+select{
+    padding-left: 23px !important;
+}
+
+::placeholder{
+    padding-left: 10px !important;
+}
+
+.Toast{
+    top: 00% !important;
+    left: 75% !important;
+}
+
+.Image{
+    border-style:dashed !important;
 }

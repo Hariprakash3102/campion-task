@@ -23,7 +23,7 @@ const Sidebar = () =>{
               <div className='ps-4 mb-3' > <img src={Guest} width={'20px'}></img> Guest Management </div>
               
               <div className='ps-4 mb-3' > <img src={Store} width={'20px'} />  General store <span className='float-end me-5'> <img src={RightArrow} width={'20px'} /></span> </div> 
-              <div className='ps-4 mb-3' > <img src={Management} width={'20px'} /> Management <span className='float-end me-5'> <img src={DownArrow} width={'17px'} /></span> </div> 
+              <div className='ps-4 mb-3 Management rounded p-1' > <img src={Management} width={'20px'} /> Management <span className='float-end me-5'> <img src={DownArrow} width={'17px'} /></span> </div> 
               <div className='ps-4 mb-3' > 
                 {/* <ul> */}
                   <li className=' mb-3 ' >Room Mangement</li>

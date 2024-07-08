@@ -1,14 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import user from '../Assets/user.png';
-import logo from '../Assets/logo.png';
-import Dashboard from '../Assets/Dashboard.png';
-import Reservation from '../Assets/reservation.png';
-import Deer from '../Assets/deer.png';
-import Guest from '../Assets/Guest.png';
-import Store from '../Assets/store.png';
-import Management from '../Assets/Management.png';
-import Report from '../Assets/Report.png';
 import ToggleButton from '../Assets/Toggle.png'
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -19,6 +11,7 @@ const Navbar = () =>{
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    
     return(
         <div>
             <div className="pt-1 sticky-top"  style={{ backgroundColor: '#ffffff', height: '50px',   }}>
@@ -48,9 +41,9 @@ const Navbar = () =>{
                             <Sidebar />
                             </Offcanvas.Body>                        
                         </Offcanvas>
+
                     </div>
-                </div> 
-                
+                </div>  
             </div>
         </div>
     );
