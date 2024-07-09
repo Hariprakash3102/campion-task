@@ -23,7 +23,7 @@ function App() {
             {/* Create start*/}
             <div className='col p-4'>
                   <div className='col'>
-                        <div className='mb-3'><Icon icon="material-symbols:arrow-left-alt" /> Create</div>
+                        <div className='mb-3'><Icon icon="material-symbols:arrow-left-alt" /> Crete</div>
                   </div>  
                   
                   <div className=''>
