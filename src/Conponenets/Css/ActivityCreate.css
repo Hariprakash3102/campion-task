@@ -13,10 +13,10 @@
     border: 1px solid #dee2e6;  
 }
 
-.SaveBtn:hover{
+/* .SaveBtn:hover{
     background-color: #ffffff !important;
     color:  #3f493b !important;
-}
+} */
 
 .CancelBtn:hover{
     color:  #ffffff !important;

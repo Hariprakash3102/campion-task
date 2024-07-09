@@ -4,13 +4,12 @@ import Navbar from './Conponenets/Navbar/Navbar';
 import Sidebar from './Conponenets/Sidebar/Sidebar';
 import { Icon } from '@iconify/react';
 
-
 function App() {
   return(
       <div>
         <div className="row  m-0 vh-100"  style={{ backgroundColor: '#fafafa' }} >
           {/* Side bar start */}
-          <div className="col-3 col-xl-2 shodow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block"  style={{ backgroundColor: '#ffffff' }} >
+          <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block"  style={{ backgroundColor: '#ffffff' }} >
               <Sidebar />
           </div>
           {/* Side bar end */} 
@@ -23,7 +22,7 @@ function App() {
             {/* Create start*/}
             <div className='col p-4'>
                   <div className='col'>
-                        <div className='mb-3'><Icon icon="material-symbols:arrow-left-alt" /> Crete</div>
+                        <div className='mb-3'><Icon icon="material-symbols:arrow-left-alt" /> Create</div>
                   </div>  
                   
                   <div className=''>
