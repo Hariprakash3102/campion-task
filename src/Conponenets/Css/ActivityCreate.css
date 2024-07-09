@@ -28,6 +28,7 @@ form.input{
 
 select{
     padding-left: 23px !important;
+    padding-right: 23px !important;
 }
 
 ::placeholder{
