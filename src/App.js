@@ -5,9 +5,6 @@ import Sidebar from './Conponenets/Sidebar/Sidebar';
 import { Icon } from '@iconify/react';
 
 
-
-
-
 function App() {
   return(
       <div>
