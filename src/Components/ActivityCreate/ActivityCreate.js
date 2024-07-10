@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import '../Css/ActivityCreate.css';
-import Toast from 'react-bootstrap/Toast';  
-import ToastContainer from 'react-bootstrap/ToastContainer'
 import Form from 'react-bootstrap/Form';
-import { FormControl, FormGroup } from 'react-bootstrap';
 import ToastFunction from '../ToastFunction/ToastFunction';
 
 const ActivityCreate = () => { 
@@ -35,14 +32,18 @@ const ActivityCreate = () => {
     
   return (
     <div> 
-        <Form onSubmit={(e) => e.preventDefault()} >
+        {/* Form Started */}
+        <Form onSubmit={e => e.preventDefault()} >
             <div className="row m-1 bg-white "  >  
+                {/* Activity Name Started */}
                 <div className='col-12 col-md-6 col-lg-6'>
                     <Form.Group>
                         <label htmlFor="ActivityName " className='my-3 ' >Activity Name <span className='text-danger'>*</span></label>
                         <input type="text" className="form-control mb-3" id="ActivityName" placeholder="Enter Activity Name" value={ActivityName} onChange={handleAcitivityName}  />  
                     </Form.Group> 
                 </div> 
+                {/* Activity Name ended */}
+                {/* Activity Type Started */}
                 <div className="col-12 col-md-6">
                     <Form.Group>
                         <label htmlFor="ActivityType" className="my-3"> Activity Type <span className="text-danger">*</span> </label>  
@@ -54,7 +55,8 @@ const ActivityCreate = () => {
                         </Form.Select> 
                     </Form.Group>
                 </div>
-
+                {/* Activity Type ended */}
+                {/* Pricing type started */}
                 <div className='col-12 col-md-6 col-lg-6'>
                     <Form.Group>
                         <label htmlFor="PricingType" className='mb-3' >Pricing Type</label>
@@ -63,29 +65,32 @@ const ActivityCreate = () => {
                         </Form.Select>
                     </Form.Group>  
                 </div>
-
+                {/* Pricing type ended */}
+                {/* 1st price col started */}
                 <div className='col-12 col-md-6 col-lg-6'>
                     <Form.Group>
                         <label htmlFor="Price" className='mb-3' >Price<span className='text-danger'>*</span></label>
                         <input type="text" className="form-control mb-3  p-2 " id="Price" placeholder="$10" />  
                     </Form.Group>
                 </div>
-
+                {/* 1st price col ended */}
+                {/* Image Started */}
                 <div className='col-12 col-md-6 col-lg-6'>
                     <Form.Group>
                         <label htmlFor="Image " className='mb-3 '>Image</label>
                         <input type="file " className="form-control  ps-md-5 text-center mb-3 Image" id="Image" placeholder=" + upload file"  />  
                     </Form.Group>  
                 </div>
-
+                {/* Image ended */}
+                {/* Info Started */}
                 <div className='col-12 col-md-6 col-lg-6'>
                     <Form.Group> 
                         <label htmlFor="Info " className='mb-3' >Info</label>
                         <input type="text" className="form-control    mb-3 " id="Info" placeholder="Enter Info"/>                  
-                    </Form.Group>
-
+                    </Form.Group> 
                 </div> 
-
+                {/* Info ended */}
+                {/* Override count with checklist Started */}
                 <div className='col-12 col-md-6 d-flex flex-row flex wrap'>
                     <Form.Group className='pt-4 pe-1'>
                         <input type="checkbox" className="form-check-input mt-4" id="checklist" onChange={handleOverrideCount} />
@@ -95,14 +100,16 @@ const ActivityCreate = () => {
                         <input type="text" className="form-control mb-3 p-2" id="OverrideCount" disabled={active} />
                     </Form.Group>
                 </div>  
-
+                {/* Override count with checklist ended */}
+                {/* 2nd price col started */}
                 <div className='col-12 col-md-6 col-lg-6'>
                     <Form.Group>
                         <label htmlFor="Price" className='mb-3'>Price<span className='text-danger'>*</span></label>
                         <input type="text" className="form-control mb-3 p-2" id="Price" disabled={active} />  
                     </Form.Group>  
                 </div>
-
+                {/* 2nd price col ended */}
+                {/* Customer Field with checklist Started */}
                 <div className='col-12 col-md-6 d-flex flex-row flex-nowrap'>
                     <Form.Group className=' pt-4 pe-1'>
                         <input type="checkbox" className="form-check-input mt-4 " id="checklist" onChange={handlecustomeField} />
@@ -112,22 +119,27 @@ const ActivityCreate = () => {
                         <input type="text" className="form-control mb-3 p-2" id="customeField" disabled={activeCustome}  />   
                     </Form.Group> 
                 </div>
+                {/* Customer Field with checklist Ended */}
+                {/* 3rd price col Started */}
                 <Form.Group className='col-12 col-md-6 col-lg-6'>
                         <label htmlFor="Price" className='mb-3'>Price<span className='text-danger'>*</span></label>
                         <input type="text" className="form-control p-2" id="Price" disabled={activeCustome} />  
                 </Form.Group>
+                {/* 3rd price col ended */}
 
-                <div className='text-primary flex-wrap ps-5 pt-2' aria-disabled >  + Add </div>  
-                
+                <div className=' col-1 border border-0 btn text-primary flex-wrap ps-5 pt-2' aria-disabled >  + Add </div>  
+                {/* Buttons for Save and Cancel */}
                 <div className='col-12 d-flex justify-content-end my-3'>
                     <button className=' btn me-3 CancelBtn border bg-white' onClick={handleCancel}>Cancel</button>
                     <button  className='btn me-3 SaveBtn' onClick={handleSave}>Save</button>       
                 </div>
-
+                {/* Toaster */}
                 <ToastFunction showCancel={showCancel} setShowCancel={setShowCancel} showSave={showSave} setShowSave={setShowSave} /> 
 
             </div>
         </Form> 
+        {/* Form ended */}
+        
     </div>
   );
 }

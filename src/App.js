@@ -1,7 +1,7 @@
 import './App.css';
-import ActivityCreate from './Conponenets/ActivityCreate/ActivityCreate';
-import Navbar from './Conponenets/Navbar/Navbar';
-import Sidebar from './Conponenets/Sidebar/Sidebar';
+import ActivityCreate from './Components/ActivityCreate/ActivityCreate';
+import Navbar from './Components/Navbar/Navbar';
+import Sidebar from './Components/Sidebar/Sidebar';
 import { Icon } from '@iconify/react';
 
 function App() {
