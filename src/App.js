@@ -1,38 +1,21 @@
 import './App.css';
-import ActivityCreate from './Components/ActivityCreate/ActivityCreate';
-import Navbar from './Components/Navbar/Navbar';
-import Sidebar from './Components/Sidebar/Sidebar';
-import { Icon } from '@iconify/react';
+import Home from './Components/Home/Home';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Management from './Components/Management/Management';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
   return(
-      <div>
-        <div className="row  m-0 vh-100"  style={{ backgroundColor: '#fafafa' }} >
-          {/* Side bar start */}
-          <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block"  style={{ backgroundColor: '#ffffff' }} >
-              <Sidebar />
-          </div>
-          {/* Side bar end */} 
-
-          <div className='col-12 col-lg-9 shadow-lg col-xl-10 p-0'>
-            {/* nav bar start */}
-              <Navbar /> 
-            {/* navbar end */}
-
-            {/* Create start*/}
-            <div className='col p-4'>
-                  <div className='col'>
-                        <div className='mb-3'><Icon icon="material-symbols:arrow-left-alt" /> Create</div>
-                  </div>  
-                  
-                  <div className=''>
-                        <ActivityCreate />
-                  </div>
-            </div>
-            {/* Create end */}
-          </div>
-        </div>  
-      </div>
+    <div className="App">
+      <Router>
+         <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route  path="/management" element={<Management />} />
+        </Routes>
+      </Router>
+       
+    </div>
   );
 }
 
