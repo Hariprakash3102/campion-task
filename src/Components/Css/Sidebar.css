@@ -1,6 +1,16 @@
 .SideColor{
-    color: #8f958c;
+    color: #8f958c !important;
 }
-.Management{
-    background-color: #f3efed;
-}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .toggle-icon.open {
+    transform: rotate(180deg);
+  }
+
+  .accordion-item.h2.button.accordion-button{
+    background-color: rgb(255, 255, 255) !important;
+    border: none !important;
+  }
