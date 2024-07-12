@@ -6,8 +6,8 @@ const ToastFunction = (props) => {
     return (
         <ToastContainer className="p-3 me-5 my-5 Toast">
             {/* Toast For Cancel buttton */}
-            <Toast show={props.showCancel} delay={3000} autohide onClose={() => props.setShowCancel(false)}>
-                <Toast.Body className='bg-warning text-white rounded'>
+            <Toast className='' show={props.showCancel} delay={3000} autohide onClose={() => props.setShowCancel(false)}>
+                <Toast.Body className='bg-warning text-white rounded position-relative end-0'>
                     Cancelled the Activity :(
                 </Toast.Body>
             </Toast>
@@ -22,3 +22,4 @@ const ToastFunction = (props) => {
 };
 
 export default ToastFunction;
+            

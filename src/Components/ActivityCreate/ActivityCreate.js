@@ -33,7 +33,7 @@ const ActivityCreate = () => {
   return (
     <div> 
         {/* Form Started */}
-        <Form onSubmit={e => e.preventDefault()} >
+        <Form onSubmit={event => event.preventDefault()} >
             <div className="row m-1 bg-white "  >  
                 {/* Activity Name Started */}
                 <div className='col-12 col-md-6 col-lg-6'>
@@ -127,7 +127,7 @@ const ActivityCreate = () => {
                 </Form.Group>
                 {/* 3rd price col ended */}
 
-                <div className=' col-1 border border-0 btn text-primary flex-wrap ps-5 pt-2' aria-disabled >  + Add </div>  
+                <div className=' col-2 border border-0 btn text-primary flex-wrap ps-5 pt-2' aria-disabled >  + Add </div>  
                 {/* Buttons for Save and Cancel */}
                 <div className='col-12 d-flex justify-content-end my-3'>
                     <button className=' btn me-3 CancelBtn border bg-white' onClick={handleCancel}>Cancel</button>
@@ -142,8 +142,7 @@ const ActivityCreate = () => {
         
     </div>
   );
-}
-
+} 
 export default ActivityCreate;
 
 

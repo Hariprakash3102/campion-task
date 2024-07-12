@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import UserInfo from "../User/User";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
+import Table from 'react-bootstrap/Table';
 const UserDetails = () => {
 
     const {UserId}= useParams();
@@ -20,7 +21,7 @@ const UserDetails = () => {
                 </div>
                 {/* Side bar end */} 
 
-                <div className='col-12 col-lg-9  shadow-lg col-xl-10 p-0'>
+                <div className='col-12 col-lg-9 col-xl-10   m-0 p-0 '>
                     {/* nav bar start */}
                     <Navbar /> 
                     {/* navbar end */} 
@@ -29,10 +30,7 @@ const UserDetails = () => {
                     </div>
 
                     
-                    <div className="text-center">
-                        <h1>{User.userName}</h1>
-                        <div>Phone-Number : {User.phoneNO}</div>
-                        <div>Address : {User.Address}</div> 
+                    <div className="col-12 px-5 d-flex">
                     </div>
                 </div>
 
@@ -43,3 +41,24 @@ const UserDetails = () => {
 
 
 export default UserDetails;
+{/* <h1>{User.userName}</h1>
+<div>Phone-Number : {User.phoneNO}</div>
+<div>Address : {User.Address}</div>  */}
+{/* <Table striped bordered hover className="mt-5">
+    <thead>
+        <tr>
+        <th>#</th>
+        <th> userName</th>
+        <th>Phone-Number</th>
+        <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>HPV{User.id}</td>
+        <td>{User.userName}</td>
+        <td>{User.phoneNO}</td>
+        <td>{User.Address}</td>
+        </tr>
+    </tbody>
+</Table> */}

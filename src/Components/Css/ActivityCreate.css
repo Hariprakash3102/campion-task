@@ -36,8 +36,9 @@ select{
 }
 
 .Toast{
-    top: 00% !important;
-    left: 75% !important;
+    top:80% !important;
+    left: 50% !important;
+    
 }
 
 .Image{

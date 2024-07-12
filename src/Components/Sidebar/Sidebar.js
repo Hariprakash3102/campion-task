@@ -8,11 +8,9 @@ import Management from '../Assets/Management.png';
 import Report from '../Assets/Report.png';
 import Store from '../Assets/store.png';
 import RightArrow from '../Assets/rightArrow.png';
-import DownArrow from '../Assets/arrow-down.png';
 import '../Css/Sidebar.css'; 
 import {Link} from 'react-router-dom';
-import { Accordion } from 'react-bootstrap';
-
+import { Icon } from '@iconify/react'; 
 
 
 const Sidebar = () =>{
@@ -45,28 +43,11 @@ const Sidebar = () =>{
                 </span>
               </div> 
 
-              <Accordion className=' mb-3 SideColor rounded  border-0'  >
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header className='py-1  border-0 bg-white'><img src={Management} width={'20px'} alt="Management" className='me-2 ' /> <p className='SideColor p-0 m-0 '>Management</p> </Accordion.Header>
-                    <Accordion.Body className=' border-0'>
-                    <div className='mb-3'>
-                      <ul className=''>
-                        <li className='mb-3 SideColor'>Room Management</li>
-                        <li className='mb-3 SideColor'><Link to='/Management' className='text-decoration-none SideColor'>Activity Management</Link></li>
-                        <li className='mb-3 SideColor '>Event Management</li>
-                        <li className='mb-3 SideColor ' >Guide Management</li>
-                        <li className='mb-3 SideColor '>Subscription/Amenities</li>
-                      </ul>
-                    </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-              </Accordion>
-
-                <div className='ps-4 mb-3 Management rounded p-1' onClick={toggleList} style={{ cursor: 'pointer' }}>
+                <div className='ps-4 mb-3 Management rounded p-1' onClick={toggleList} >
                   <img src={Management} width={'20px'} alt="Management" /> Management 
                   <span className='float-end me-5'>
-                    <img src={DownArrow}  width={'17px'} alt="Down Arrow" className={`toggle-icon ${isOpen ? 'open' : ''}`} />
-                  </span>
+                    <Icon icon="iconamoon:arrow-up-2-duotone"  style={{color: '#8f958c'}}  className={`toggle-icon ${isOpen ? 'open' : ''}`} /> 
+                  </span>       
                 </div>  
                 {isOpen && (
                   <div className='ps-4 mb-3'>
@@ -88,7 +69,24 @@ const Sidebar = () =>{
         </div>
       
     );
-}
+  }
+  
 
-
-export default Sidebar;
+  
+  export default Sidebar;
+  {/* <Accordion className=' mb-3 SideColor rounded  border-0'  >
+      <Accordion.Item eventKey="0">
+        <Accordion.Header className='py-1  border-0 bg-white'><img src={Management} width={'20px'} alt="Management" className='me-2 ' /> <p className='SideColor p-0 m-0 '>Management</p> </Accordion.Header>
+        <Accordion.Body className=' border-0'>
+        <div className='mb-3'>
+          <ul className=''>
+            <li className='mb-3 SideColor'>Room Management</li>
+            <li className='mb-3 SideColor'><Link to='/Management' className='text-decoration-none SideColor'>Activity Management</Link></li>
+            <li className='mb-3 SideColor '>Event Management</li>
+            <li className='mb-3 SideColor ' >Guide Management</li>
+            <li className='mb-3 SideColor '>Subscription/Amenities</li>
+          </ul>
+        </div>
+        </Accordion.Body>
+      </Accordion.Item>
+  </Accordion> */}
