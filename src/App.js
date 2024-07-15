@@ -4,6 +4,7 @@ import Management from './Components/Management/Management';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import UserList from './Components/UserList/UserList';
 import UserDetails from './Components/UserDetails/UserDetails';
+import EditApi from './Components/EditApi/EditApi';
 
 function App() {
   return(
@@ -13,7 +14,8 @@ function App() {
           <Route  path="/" element={<Home />} />
           <Route  path="/Dashboard" element={<Dashboard />} />
           <Route path="/Dashboard/UserList" element={<UserList/>}  /> 
-          <Route path="/Dashboard/UserList/:Id" element={<UserDetails />} />
+          <Route exact path="/Dashboard/UserList/:Id" element={<UserDetails />} />
+          <Route path="/Dashboard/UserList/Edit/:EditId" element={<EditApi />} />
           <Route  path="/management" element={<Management />} />
         </Routes>
       </Router>
