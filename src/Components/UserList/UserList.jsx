@@ -83,6 +83,7 @@ const UserList = () => {
                 alert('try again');
                 setDisplay(false);
             })
+            
     };
 
 
@@ -103,7 +104,7 @@ const UserList = () => {
                 <span className="text-info">Loading</span>
             </div>
         );
-    }
+    };
 
 
     if (error)
@@ -129,7 +130,7 @@ const UserList = () => {
                         <div className="col-12 col-md-8 col-lg-6 col-xl-4 ms-auto position-relative">
                             <input type="search" className="form-control rounded py-2 my-3 " />
                             <span className="position-absolute top-50 end-0  translate-middle-y me-3">
-                                <Icon icon="flowbite:search-solid" style={{ color: '#07f242' }} width={'35px'} />
+                                <Icon icon="flowbite:search-solid" className="text-info" width={'35px'} />
                             </span>
                         </div>
                         <div className="col-1 d-flex ms-auto ms-md-0" style={{ width: '130px' }}>
