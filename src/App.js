@@ -5,13 +5,14 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import UserList from './Components/UserList/UserList';
 import UserDetails from './Components/UserDetails/UserDetails';
 import EditApi from './Components/EditApi/EditApi';
+import Login from './Components/Login/Login';
 
 function App() {
   return(
     <div >
       <Router>
          <Routes>
-          <Route  path="/" element={<Home />} />
+          <Route  path="/" element={<Login />} />
           <Route  path="/Dashboard" element={<Dashboard />} />
           <Route path="/Dashboard/UserList" element={<UserList/>}  /> 
           <Route exact path="/Dashboard/UserList/:Id" element={<UserDetails />} />

@@ -7,6 +7,7 @@ import Navbar from "../Navbar/Navbar";
 import { Button, Form, FormGroup, Modal, Table } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import '../Css/UserList.css';
+import Swal from "sweetalert2";
 
 
 const UserList = () => {
@@ -17,13 +18,14 @@ const UserList = () => {
     const nav = useNavigate();
     const [show, SetShow] = useState(false)
     const [deleteId, SetdeleteId] = useState(null);
-    // const [Addshow, setAddshow] = useState(false);
-    const [display, setDisplay] = useState(false)
+    const [Addshow, setAddshow] = useState(false);
+    // const [display, setDisplay] = useState(false)
     const [values, setValues] = useState(
         {
             title: '',
             price: 0,
             description: '',
+            images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'], 
             categoryId: 0,
         }
     );
@@ -50,8 +52,16 @@ const UserList = () => {
     const handleClose = () => SetShow(false);
 
     const handleDelete = async () => {
+        Swal.fire
+        ({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          })
+        
         try {
             await axios.delete(`https://api.escuelajs.co/api/v1/products/${deleteId}`);
+            
             SetData(data.filter(item => item.id !== deleteId));
             SetShow(false);
         } catch (e) {
@@ -59,11 +69,8 @@ const UserList = () => {
             alert("Try Again");
             SetShow(false);
         }
-    };
+    }; 
 
-    // const handleAddshow = () => {
-    //     setAddshow(true)
-    // }
     const handleAdd = () => {
         const payload ={
             title: values.title,
@@ -72,29 +79,65 @@ const UserList = () => {
             images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'],
             categoryId: values.categoryId
         };
-        axios.post('https://api.escuelajs.co/api/v1/products', payload)
+        axios.post('https://api.escuelajs.co/api/v1/products', values)
             .then(response => {
                 SetData([...data, response.data]);
-                alert("Item added successfully!");
-                setDisplay(false);
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "saved",
+                    showConfirmButton: false,    
+                    timer: 1500
+                });
+                setAddshow(false);
+                setValues(
+                    {
+                        title: '',
+                        price: 0,
+                        description: '',
+                        images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'], 
+                        categoryId: 0,
+                    }
+                )
             })
             .catch(e => {
                 console.error(e);
                 alert('try again');
-                setDisplay(false);
+                setValues(
+                    {
+                        title: '',
+                        price: 0,
+                        description: '',
+                        images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'], 
+                        categoryId: 0,
+                    }
+                )
+                setAddshow(false);
             })
             
-    };
-
-
-
+    }; 
 
     const handleChange = (e) => {
         setValues({
             ...values,
             [e.target.name]: e.target.value,
         })
+        console.log(values);
     }
+
+    const handleAddcancel = () => {
+        setValues(
+            {
+                title: '',
+                price: 0,
+                description: '',
+                images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'], 
+                categoryId: 0,
+            }
+        )
+        setAddshow(false);
+
+    };
 
     if (loading) {
         return (
@@ -105,7 +148,6 @@ const UserList = () => {
             </div>
         );
     };
-
 
     if (error)
         return <h2>Page Not Found : 404 ERROR</h2>
@@ -134,10 +176,10 @@ const UserList = () => {
                             </span>
                         </div>
                         <div className="col-1 d-flex ms-auto ms-md-0" style={{ width: '130px' }}>
-                            <Button variant="info" className="my-3 justify-content-evenly fs-6 text-white fw-semibold " animation="true" onClick={() => setDisplay(true)}>+ Creact</Button>
+                            <Button  className="my-3 justify-content-evenly fs-6 text-white fw-semibold border border-0" animation="true" style={{backgroundColor : '#8f958c'}} onClick={() =>  setAddshow(true)}>+ Creact</Button>
                         </div>
                     </div>
-
+                    {/* Dispaly table data */}
                     <div className="mx-2 overflow-auto">
                         <Table hover border border-0 className="overflow-auto mx-1">
                             <thead>
@@ -164,7 +206,8 @@ const UserList = () => {
                             </tbody>
                         </Table>
                     </div>
-                    <div className="col-4 position-fixed bg-white shadow-lg rounded" style={{ top: '300px', right: '540px' }}>
+                    {/* Add operation */}
+                    {/* <div className="col-4 position-fixed bg-white shadow-lg rounded" style={{ top: '300px', right: '540px' }}>
                         {display ? (
                             <div className="p-5">
                                 <Form className="mt-5" onSubmit={(e) => { e.preventDefault() }} >
@@ -192,9 +235,10 @@ const UserList = () => {
                             </div>
 
                         ) : null}
-                    </div>
+                    </div> */}
                 </div>
             </div>
+            {/* Delete Modal */}
             <Modal show={show} onHide={handleClose} animation={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirm Delete</Modal.Title>
@@ -209,40 +253,35 @@ const UserList = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            {/* <Modal show={Addshow} onHide={handleClose} animation={true}>
-                <Modal.Header closeButton>
+             <Modal show={Addshow} onHide={handleClose} animation={true}>
+                <Modal.Header >
                     <Modal.Title>Confirm Add Items</Modal.Title>
                 </Modal.Header>
                  <Modal.Body>
                      <Form className="mt-5" onSubmit={(e) => {e.preventDefault()}} >
                          <Form.Group className="mb-3" controlId="formBasicText">
                              <Form.Label>Title :</Form.Label>
-                             <Form.Control type="text" name="title" value={value.title} onChange={handleChange} />
+                             <Form.Control type="text" name="title" value={values.title} onChange={handleChange} />
                          </Form.Group>
                          <Form.Group className="mb-3" controlId="formBasicText">
                              <Form.Label>Price :</Form.Label>
-                             <Form.Control type="text" name="price" value={value.price} onChange={handleChange} />
+                             <Form.Control type="text" name="price" value={values.price} onChange={handleChange} />
                          </Form.Group>
                          <Form.Group className="mb-3" controlId="formBasicText">
                              <Form.Label>Description :</Form.Label>
-                             <Form.Control type="text" name="description" value={value.description} onChange={handleChange} />
+                             <Form.Control type="text" name="description" value={values.description} onChange={handleChange} />
                          </Form.Group> 
                          <Form.Group className="mb-3" controlId="formBasicText">
                              <Form.Label> categoryId:</Form.Label>
-                             <Form.Control type="text" name="categoryId" value={value.categoryId} onChange={handleChange} />
+                             <Form.Control type="text" name="categoryId" value={values.categoryId} onChange={handleChange} />
                          </Form.Group>
                      </Form>
                  </Modal.Body>
                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                         Close
-                     </Button>
-                     <Button className="text-white" variant="info" onClick={handleAdd}>
-                         Confirm
-                    </Button>
+                    <Button variant="success" className="mx-2" onClick={handleAdd} >Add</Button>
+                    <Button onClick={handleAddcancel}>cancel</Button>
                 </Modal.Footer>
-             </Modal> */}
-
+             </Modal> 
         </div>
     );
 }

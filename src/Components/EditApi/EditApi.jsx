@@ -38,7 +38,7 @@ useEffect(  () => {
             SetData(response.data);
             SetInfo({
                 id : response.data.id,
-                title: response.data.title,
+                title: response.d         ,
                 price: response.data.price,
                 description: response.data.description,
             });
