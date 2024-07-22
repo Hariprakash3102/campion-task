@@ -7,9 +7,9 @@ import { Icon } from '@iconify/react';
 const Management= () => {
     return(
         <div>
-            <div className="row  m-0 vh-100"  style={{ backgroundColor: '#fafafa' }} >
+            <div className="row  m-0 vh-100"  >
                 {/* Side bar start */}
-                <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block"  style={{ backgroundColor: '#ffffff' }} >
+                <div className="col-3 col-xl-2 shadow-lg vh-100 sticky-top d-none d-lg-block bg-white"  >
                     <Sidebar />
                 </div>
                 {/* Side bar end */} 

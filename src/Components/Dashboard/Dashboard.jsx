@@ -4,14 +4,22 @@ import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar"; 
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Breadcrumb } from "react-bootstrap";
 
 
 const Dashboard = () => {
     return(
         <div>
-            <div className="row  m-0 "  style={{ backgroundColor: '#fafafa' }} >
+             <Breadcrumb>
+                <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
+                <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
+                    Library
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>Data</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="row  m-0 " >
                 {/* Side bar start */}
-                <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block bg-white ">
+                <div className="col-3 col-xl-2 shadow-lg vh-100 sticky-top d-none d-lg-block bg-white ">
                     <Sidebar />
                 </div>
                 {/* Side bar end */} 
@@ -36,7 +44,7 @@ const Dashboard = () => {
                                     Access the main overview of ranch activities, reservations, and important updates.Get a quick summary of key metrics and recent activities.
                                 </div>
                                 <div className="float-end">
-                                     <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  style={{color: 'white'}} width={'35px'} />
+                                     <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  className="text-white" width={'35px'} />
                                 </div>
                             </div>
                             
@@ -51,7 +59,7 @@ const Dashboard = () => {
                                     </div>
                                     <Link  to='/Dashboard/UserList' className="text-decoration-none">
                                     <div className="float-end">
-                                    <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  style={{color: 'white'}} width={'35px'} />
+                                    <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  className="text-white" width={'35px'} />
                                     </div>
                                     </Link>
                                 </div>
@@ -63,7 +71,7 @@ const Dashboard = () => {
                                     Access detailed management options for various aspects of the ranch.Toggle to view and manage specific categories
                                 </div>  
                                 <div className="float-end">
-                                    <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  style={{color: 'white'}} width={'35px'} />
+                                    <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  className="text-white" width={'35px'} />
                                 </div>
                             </div>
                         </div>   
@@ -74,7 +82,7 @@ const Dashboard = () => {
                                 Oversee all guest-related activities and information. Maintain detailed records of guest preferences, special requests, and visit history.
                                 </div>  
                                 <div className="float-end">
-                                    <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  style={{color: 'white'}} width={'35px'} />
+                                    <span className="fs-5 me-2 fw-semibold text-white">Learn more</span><Icon icon="material-symbols:arrow-circle-right-outline-rounded"  className="text-white" width={'35px'} />
                                 </div>
                             </div>
                         </div>  

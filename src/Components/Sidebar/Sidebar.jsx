@@ -23,7 +23,7 @@ const Sidebar = () =>{
     return(
         <div> 
             <div className='SideColor text-start'>
-              <img src={logo} className='img-fluid p-4 ms-1' alt="Logo" width={'220px'} />
+              <Link to='/' ><img src={logo} className='img-fluid p-4 ms-1' alt="Logo" width={'220px'} /> </Link>
               <div className=' ps-4 my-3 '>
                 <img src={Dashboard} width={'20px'} alt="Dashboard" /> <Link to='/Dashboard'  className='text-decoration-none SideColor' >Dashboard</Link>
               </div>
@@ -46,16 +46,14 @@ const Sidebar = () =>{
                 <div className='ps-4 mb-3 Management rounded p-1' onClick={toggleList} >
                   <img src={Management} width={'20px'} alt="Management" /> Management 
                   <span className='float-end me-5'>
-                    <Icon icon="iconamoon:arrow-up-2-duotone"  style={{color: '#8f958c'}}  className={`toggle-icon ${isOpen ? 'open' : ''}`} /> 
+                  <img src={RightArrow} width={'20px'} alt="Right Arrow"  className={`toggle-icon ${isOpen ? 'open' : ''}`} /> 
                   </span>       
                 </div>  
                 {isOpen && (
                   <div className='ps-4 mb-3'>
                     <ul>
                       <li className='mb-3'>Room Management</li>
-                      <li className='mb-3'>
-                        <Link to='/Management' className='text-decoration-none SideColor'>Activity Management</Link>
-                      </li>
+                      <li className='mb-3'> <Link to='/Management' className='text-decoration-none SideColor'>Activity Management</Link> </li>
                       <li className='mb-3'>Event Management</li>
                       <li className='mb-3'>Guide Management</li>
                       <li className='mb-3'>Subscription/Amenities</li>
@@ -69,11 +67,8 @@ const Sidebar = () =>{
         </div>
       
     );
-  }
-  
-
-  
-  export default Sidebar;
+  }  
+export default Sidebar;
   {/* <Accordion className=' mb-3 SideColor rounded  border-0'  >
       <Accordion.Item eventKey="0">
         <Accordion.Header className='py-1  border-0 bg-white'><img src={Management} width={'20px'} alt="Management" className='me-2 ' /> <p className='SideColor p-0 m-0 '>Management</p> </Accordion.Header>

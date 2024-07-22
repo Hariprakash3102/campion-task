@@ -6,7 +6,10 @@
     background-position: center;
 }   
 .bgColor{
-    background-color: #6f7f68 !important;
+    background-color: #737c6e !important;
+}
+.Color{
+    color: #788573 !important;
 }
 
 body {
@@ -18,7 +21,17 @@ body {
     font-size: 14px;
 }
 
-.eyeIcon{
-    top:133px;
-    right:20px;
+.eyeIcon {
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+input:hover{
+    border: 1px solid black;
+}
+input:focus{
+    border: 1px solid #6f7f68 !important;
+    outline: none !important;
+
 }

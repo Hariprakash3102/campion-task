@@ -4,7 +4,7 @@ import { Button, Form, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
- 
+import Swal from "sweetalert2";
 
 
 
@@ -38,7 +38,7 @@ useEffect(  () => {
             SetData(response.data);
             SetInfo({
                 id : response.data.id,
-                title: response.d         ,
+                title: response.data.title,
                 price: response.data.price,
                 description: response.data.description,
             });
@@ -56,7 +56,8 @@ const handleUpdate = async () => {
     try{
         const response = await axios.put(`https://api.escuelajs.co/api/v1/products/${EditId}` , info);
         SetData(response.data);
-        alert('Data updated successfully!');
+        Swal.fire ({ title: "Updated!", text: "Data updated successfully!", icon: "success", timer: 500}) 
+        // alert('Data updated successfully!');
         Nav('/Dashboard/UserList')
     }
     catch(e){
@@ -64,14 +65,12 @@ const handleUpdate = async () => {
         SetLoading(false);
     };
 }
-
-
 const handleCancel = async () => {
     try{
         Nav('/Dashboard/UserList');
     }
     catch (e){
-        console.error('Error: 0',e);
+        console.error('Error: ',e);
     }
 }
 const handleChange = (e) => {
@@ -90,10 +89,9 @@ if(loading){
         </div>
     );
 }
-
     return(
         <div>
-             <div className="row  m-0 vh-200"  style={{ backgroundColor: '#fafafa' }} >
+             <div className="row  m-0 vh-200">
                 {/* Side bar start */}
                 <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block bg-white "   >
                     <Sidebar />

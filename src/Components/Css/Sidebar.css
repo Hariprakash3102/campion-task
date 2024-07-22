@@ -4,10 +4,13 @@
 
 .toggle-icon {
     transition: transform 0.3s ease;
+    cursor: pointer;
+
   }
   
   .toggle-icon.open {
-    transform: rotate(180deg);
+    transform: rotate(90deg);
+    cursor: pointer;
   }
 
  

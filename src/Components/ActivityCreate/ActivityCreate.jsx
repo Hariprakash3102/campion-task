@@ -8,28 +8,23 @@ const ActivityCreate = () => {
     const [showSave, setShowSave] = useState(false);
     const [ActivityName,setActivityName] =useState('');
     const [active, setActive] = useState(true);
-    const [activeCustome,setactiveCustome] = useState(true);
+    const [activeCustome,setactiveCustome] = useState(true); 
     
     const handleAcitivityName = (event) => {
         setActivityName(event.target.value);
-    };
-  
+    }; 
     const handleOverrideCount = () => {
         setActive(prevActive => !prevActive);
-    };
-
+    }; 
     const handlecustomeField = () => {
         setactiveCustome(prevActive => !prevActive);
-    };
-
+    }; 
     const handleCancel = () => {
       setShowCancel(true);
-    };
-  
+    }; 
     const handleSave = () => {
       setShowSave(true);
     };
-    
   return (
     <div> 
         {/* Form Started */}
@@ -126,7 +121,6 @@ const ActivityCreate = () => {
                         <input type="text" className="form-control p-2" id="Price" disabled={activeCustome} />  
                 </Form.Group>
                 {/* 3rd price col ended */}
-
                 <div className=' col-2 border border-0 btn text-primary flex-wrap ps-5 pt-2' aria-disabled >  + Add </div>  
                 {/* Buttons for Save and Cancel */}
                 <div className='col-12 d-flex justify-content-end my-3'>
@@ -135,7 +129,6 @@ const ActivityCreate = () => {
                 </div>
                 {/* Toaster */}
                 <ToastFunction showCancel={showCancel} setShowCancel={setShowCancel} showSave={showSave} setShowSave={setShowSave} /> 
-
             </div>
         </Form> 
         {/* Form ended */}

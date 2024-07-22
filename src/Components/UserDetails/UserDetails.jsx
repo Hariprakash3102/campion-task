@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {Link, useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import Table from 'react-bootstrap/Table';
-import { Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import axios from "axios";
 const UserDetails = () => {
 
-    const {Id}= useParams();
-   
-    const [data,SetData] = useState("");
-    
-    const [loading,SetLoading] = useState(true);
-    
-    const [error,SetError] = useState("");
-
-    
-    useEffect(  () => {
-
+    const {Id}= useParams(); 
+    const [data,SetData] = useState(""); 
+    const [loading,SetLoading] = useState(true); 
+    const [error,SetError] = useState(""); 
+    useEffect(  () => { 
         const ProductDetails = async () =>{
             try{
                 const response = await axios.get(`https://api.escuelajs.co/api/v1/products/${Id}`);
@@ -28,11 +22,9 @@ const UserDetails = () => {
                 SetError(e);
                 SetLoading(false);
             }
-        };
-    
+        }; 
         ProductDetails();
     },[Id]) 
-
     if(loading){
         return(
             <div className="d-flex justify-content-center align-items-center vh-100">
@@ -45,10 +37,8 @@ const UserDetails = () => {
     if(error) return <p>Error : {error.message}</p>
 
     return(
-
-
         <div >
-            <div className="row  m-0 vh-200"  style={{ backgroundColor: '#fafafa' }} >
+            <div className="row  m-0 vh-200 " >
                 {/* Side bar start */}
                 <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block bg-white "   >
                     <Sidebar />
@@ -59,11 +49,10 @@ const UserDetails = () => {
                     {/* nav bar start */}
                     <Navbar /> 
                     {/* navbar end */} 
-                    <div className="text-center align-items-center mt-5" >
-                        <h2 className=""> Welcome to the Campion Ranch</h2> 
-                    </div> 
-                      
-                    <div className="px-2" >
+                    <div className=" align-items-center mt-5" >
+                        <h2 className="text-center ">User Details</h2> 
+                    </div>
+                    <div className="px-2 py-lg-2 px-lg-5" >
                         <h1>{data.title}</h1>
                         <p className="fw-bold fs-1 text-success">Price: ${data.price}</p>
                         <p>Description: {data.description}</p>
@@ -78,7 +67,7 @@ const UserDetails = () => {
                         <p>Creation At: {new Date(data.creationAt).toLocaleString()}</p>
                         <p>Updated At: {new Date(data.updatedAt).toLocaleString()}</p>
                         <h3 className="py-3">Category</h3>
-                        <table className="border w-100 overflow-auto">
+                        <Table className="border w-100 overflow-auto">
                             <thead className="border">
                                 <tr>
                                     <th>ID</th>
@@ -92,18 +81,21 @@ const UserDetails = () => {
                                 <tr>
                                     <td>HPL{data.category.id}</td>
                                     <td>{data.category.name}</td>
-                                    <td><img src={data.category.image} alt={data.category.name} width="200" /></td>
-                                    <td> {new Date(data.category.creationAt).toLocaleString()}</td>
-                                    <td>{new Date(data.category.updatedAt).toLocaleString()}</td> 
+                                    <td><img src={data.category.image} alt={data.category.name} width="100" /></td>
+                                    <td> {data.creationAt}</td>
+                                    <td>{data.updatedAt}</td> 
                                 </tr> 
                             </tbody>
-                        </table>  
+                        </Table>  
+                        <div className="justify-content-center d-flex gap-2">
+                            <Link to={`/Dashboard/UserList/Edit/${Id}`}> <Button variant="success" className="">Edit</Button></Link>
+                            <Link to='/Dashboard/UserList'><Button variant="danger">Cancel</Button></Link>
+                        </div>
                     </div>  
                 </div> 
             </div> 
         </div>
     );
 }
-
 
 export default UserDetails;

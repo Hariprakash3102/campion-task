@@ -1,4 +1,3 @@
-import Home from './Components/Home/Home';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Management from './Components/Management/Management';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
@@ -6,13 +5,14 @@ import UserList from './Components/UserList/UserList';
 import UserDetails from './Components/UserDetails/UserDetails';
 import EditApi from './Components/EditApi/EditApi';
 import Login from './Components/Login/Login';
+import '../src/App.css'
 
 function App() {
   return(
     <div >
       <Router>
          <Routes>
-          <Route  path="/" element={<Login />} />
+          <Route  path="/" element={<Login />} /> 
           <Route  path="/Dashboard" element={<Dashboard />} />
           <Route path="/Dashboard/UserList" element={<UserList/>}  /> 
           <Route exact path="/Dashboard/UserList/:Id" element={<UserDetails />} />
