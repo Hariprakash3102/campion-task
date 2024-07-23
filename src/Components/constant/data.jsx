@@ -1,31 +1,19 @@
-const input = [
-    { label: 'Email', name: 'email', type: 'email', placeholder: 'Enter the Email' },
-    { label: 'Password', name: 'password', type: 'password', placeholder: 'Enter the Password' }
-];
+export const input = [ { title: ' Welcome to the Campion Ranch' ,
+    body: 'Welcome to the Campion Ranch Dashboard! This is your central hub for managing various aspects of the range, ensuring seamless operations and an enjoyable experience for all guests'
 
-export default input;
+}];
 
-// import { ErrorMessage, Field } from "formik";
-// import React from "react";
+export const DashboardContent = [
+    {title:'Dashboard',body:'Access the main overview of ranch activities, reservations, and important updates.Get a quick summary of key metrics and recent activities.',learn:'Learn more'},
+    {title: 'User Details',body:' Manage all guest reservations. View, modify, and confirm upcoming bookings with ease.It make good to plan the vacation to us.',learn:'Learn more'},
+    {title: 'Management',body:' Access detailed management options for various aspects of the ranch.Toggle to view and manage specific categories',learn:'Learn more'},
+    {title: 'Guest Management',body:'Oversee all guest-related activities and information. Maintain detailed records of guest preferences, special requests, and visit history.',learn:'Learn more'}
+]
 
-
-// const Input = (values,handleChange, handleBlur,showpassword) => {
-//   const inputObject = [
-//     { label: "email", name: "email", type: "email" },
-//     { label: "password", name: "password", type: "password" },
-//   ];
-//   return (
-//     inputObject.map((inputField, i) => {
-//         <div key={i}>
-//             <label className="form-label fs-6 fw-semibold" htmlFor={inputField.name}> {inputField.label} </label>
-//             <span className="text-danger">*</span>
-//             <Field type={inputField.name === 'password' && !showpassword ? "text" : inputField.type} 
-//             id={inputField.name} name={inputField.name} className="form-control w-100 mb-2 p-2 ps-4 pb-3" placeholder="Enter the Email"
-//              onChange={handleChange} onBlur={handleBlur} />
-//              <ErrorMessage name={inputField.name} component='div' className="error-message text-danger" />
-//         </div>
-//     })
-// );
-// };
-
-// export default Input;
+export const TableHeader =[
+    {name:'S.no'},
+    {name:'Title'},
+    {name:'Price'},
+    {name:'Date'},
+    {name:'Action'} 
+]

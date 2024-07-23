@@ -4,6 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import Table from 'react-bootstrap/Table';
 import { Button, Spinner } from "react-bootstrap";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
 const UserDetails = () => {
 
@@ -11,6 +12,7 @@ const UserDetails = () => {
     const [data,SetData] = useState(""); 
     const [loading,SetLoading] = useState(true); 
     const [error,SetError] = useState(""); 
+
     useEffect(  () => { 
         const ProductDetails = async () =>{
             try{
@@ -88,8 +90,8 @@ const UserDetails = () => {
                             </tbody>
                         </Table>  
                         <div className="justify-content-center d-flex gap-2">
-                            <Link to={`/Dashboard/UserList/Edit/${Id}`}> <Button variant="success" className="">Edit</Button></Link>
-                            <Link to='/Dashboard/UserList'><Button variant="danger">Cancel</Button></Link>
+                            <Link to={`/Dashboard/UserList/Edit/${Id}`}> <Button variant="none"  style={{backgroundColor:'#8f958c'}} className="text-white"> <Icon icon="mdi:edit" style={{ color: ' #ffffff' }} width={'20px'} /> Edit</Button></Link>
+                            <Link to='/Dashboard/UserList'><Button variant="none"  style={{border:'2px solid #8f958c', color: '#8f958c'}}>Cancel</Button></Link>
                         </div>
                     </div>  
                 </div> 

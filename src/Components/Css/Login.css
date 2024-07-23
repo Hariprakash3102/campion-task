@@ -31,7 +31,5 @@ input:hover{
     border: 1px solid black;
 }
 input:focus{
-    border: 1px solid #6f7f68 !important;
-    outline: none !important;
-
+    border: 2px solid #6f7f68 !important;   
 }

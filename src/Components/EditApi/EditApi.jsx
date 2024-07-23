@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
-
+import '../Css/EditApi.css'
 
 
 
@@ -56,8 +56,7 @@ const handleUpdate = async () => {
     try{
         const response = await axios.put(`https://api.escuelajs.co/api/v1/products/${EditId}` , info);
         SetData(response.data);
-        Swal.fire ({ title: "Updated!", text: "Data updated successfully!", icon: "success", timer: 500}) 
-        // alert('Data updated successfully!');
+        Swal.fire ({ title: "Updated!", text: "Data updated successfully!", icon: "success", timer: 500})  
         Nav('/Dashboard/UserList')
     }
     catch(e){
@@ -103,7 +102,7 @@ if(loading){
                     <Navbar /> 
                     {/* navbar end */} 
                     <div className="text-center align-items-center mt-5" >
-                        <h2 className=""> Welcome to the Campion Ranch</h2> 
+                        <h2 className="">Update Items</h2> 
                     </div> 
                     
                     <div className="row ">
@@ -128,8 +127,8 @@ if(loading){
                                     <Form.Control type="text"  name="description" value={info.description} onChange={handleChange} />
                                 </Form.Group>                                    
                                 <div className="d-flex justify-content-center">
-                                    <Button className="mx-2" onClick={handleUpdate}>Update</Button> 
-                                    <Button  onClick={  handleCancel}>Cancel</Button>
+                                    <Button variant='none' className="mx-2 bgColor text-white updateBtn" onClick={handleUpdate}>Update</Button> 
+                                    <Button variant='none' className="cancelBtn" onClick={  handleCancel}>Cancel</Button>
                                 </div>
                             </Form>
                         </div>

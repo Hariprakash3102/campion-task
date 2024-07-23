@@ -8,16 +8,16 @@ import { Button, Form, Modal, Table } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import '../Css/UserList.css';
 import Swal from "sweetalert2";
+import { TableHeader } from "../constant/data";  
+import moment from "moment";
 
 const UserList = () => { 
     const [data, SetData] = useState([]);
     const [loading, SetLoading] = useState(true);
     const [error, SetError] = useState(null); 
     const [show, SetShow] = useState(false);
-    const [deleteId, SetdeleteId] = useState(null);
-    const [Addshow, setAddshow] = useState(false); 
-    const initialValues = { title: '', price: 0, description: '', images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'],   categoryId: 0,  } ;
-    const [values, setValues] = useState( initialValues);
+    const [deleteId, SetdeleteId] = useState(null); 
+
     useEffect(() => {
         axios.get('https://api.escuelajs.co/api/v1/products')
             .then(response => {
@@ -29,13 +29,16 @@ const UserList = () => {
                 SetLoading(false);
             });
     }, []);
+
     const handleShow = (id) => {
         SetdeleteId(id);
         SetShow(true);
     };
+
     const handleClose = () => SetShow(false);
+
     const handleDelete = async () => {
-        Swal.fire ({ title: "Deleted!", text: "Your file has been deleted.", icon: "success", timer: 500})
+        Swal.fire ({ title: "Deleted!", text: "Your file has been deleted.", icon: "success", timer: 1000})
         try {
             await axios.delete(`https://api.escuelajs.co/api/v1/products/${deleteId}`);
             SetData(data.filter(item => item.id !== deleteId));
@@ -45,36 +48,11 @@ const UserList = () => {
             alert("Try Again");
             SetShow(false);
         }
-    }; 
-    const handleAdd = () => {
-        axios.post('https://api.escuelajs.co/api/v1/products', values)
-            .then(response => {
-                SetData([...data, response.data]);
-                Swal.fire({ position: "top-center", icon: "success", title: "saved", showConfirmButton: false, timer: 1500 });
-                setAddshow(false);
-                setValues(initialValues)
-            })
-            .catch(e => {
-                console.error(e);
-                alert('try again');
-                setValues(initialValues)
-                setAddshow(false);
-            })
-    };
-    const TableHeader= {
-
-    }
-    const handleChange = (e) => {
-        setValues({
-            ...values, [e.target.name]: e.target.value,
-        }) 
-    }
-    const handleAddcancel = () => {
-        setValues(initialValues)
-        setAddshow(false); 
-    }; 
+    };  
+ 
     if (error)
         return <h2>Page Not Found : 404 ERROR</h2>
+
     return (
         <div>
             <div className="row  m-0 vh-200">
@@ -100,90 +78,65 @@ const UserList = () => {
                             </span>
                         </div>
                         <div className="col-1 d-flex ms-auto ms-md-0" style={{ width: '130px' }}>
-                            <Button  className="my-3 justify-content-evenly fs-6 text-white fw-semibold border border-0" animation="true" style={{backgroundColor : '#8f958c'}} onClick={() =>  setAddshow(true)}>+ Create</Button>
+                           <Link to='/Dashboard/UserList/Create'>  <Button  className="my-3 justify-content-evenly fs-6 text-white fw-semibold border border-0" animation="true"
+                             style={{backgroundColor : '#8f958c'}}>+ Create</Button></Link>
                         </div>
                     </div>
                     {/* Dispaly table data */}
-                    {loading ?  
-                    ( <div className="text-center mt-5">
-                        <Spinner animation="border" role="status" variant="info">
-                        </Spinner>
-                        <span className="text-info visibility-hidden">Loading</span>
-                    </div>):
-                    (<div className="mx-2 overflow-auto">
+                    <div className="mx-2 overflow-auto">
                         <Table hover border border-0 className="overflow-auto mx-1">
                             <thead>
                                 <tr>
-                                    <th>S.no</th>  
-                                    <th>Title</th>
-                                    <th>Price</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
+                                    {TableHeader.map((item,index) =>(
+                                        <th>{item.name}</th>
+                                    ))}
                                 </tr>
                             </thead>
-                            <tbody >
+                            {loading ?  
+                            ( <tbody>
+                                <tr>
+                                    <td colSpan="5">
+                                        <div className="d-flex justify-content-center align-items-center" style={{ height: '800px' }}>
+                                            <Spinner animation="border" role="status" variant="info">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </Spinner>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>):
+                            (<tbody >
                                 {data.map(item => (
                                     <tr key={item.id}>
                                         <td> <Link to={`/Dashboard/UserList/${item.id}`} className=" text-decoration-none text-dark"> {item.id} </Link></td>
                                         <td> <Link to={`/Dashboard/UserList/${item.id}`} className=" text-decoration-none text-dark"> {item.title} </Link></td>
                                         <td> <Link to={`/Dashboard/UserList/${item.id}`} className=" text-decoration-none text-dark"> ${item.price} </Link></td>
-                                        <td> <Link to={`/Dashboard/UserList/${item.id}`} className=" text-decoration-none text-dark"> {item.creationAt} </Link></td>
+                                        <td><Link to={`/Dashboard/UserList/${item.id}`} className="text-decoration-none text-dark">{moment(item.creationAt).subtract(10, 'days').calendar()}</Link></td>                                  
                                         <td> <Link to={`/Dashboard/UserList/Edit/${item.id}`} className="text-decoration-none mx-2"> <Icon icon="mdi:edit" style={{ color: ' #8f958c' }} width={'25px'} /> </Link>
                                         <Button className=" border border-0" variant="link"><Icon icon="ic:baseline-delete" style={{ color: ' #ff0000' }} onClick={() => handleShow(item.id)} width={'25px'} /></Button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
-                        </Table>
-                       
-                    </div> )}
+                            )}
+                        </Table> 
+                    </div> 
                 </div>
             </div>
             {/* Delete Modal */}
-            <Modal show={show} onHide={handleClose} animation={true}>
+            <Modal show={show} onHide={handleClose} animation={false} timer={500}>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirm Delete</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Are you sure you want to delete this Data?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
+                    <Button variant="none" style={{border:'2px solid #8f958c', color: '#8f958c'}} onClick={handleClose}>
+                        Cancel
                     </Button>
-                    <Button className=" text-white " variant="info" onClick={handleDelete}>
-                        Confirm
+                    <Button className="text-white" style={{backgroundColor:'#8f958c'}} variant="none" onClick={handleDelete}>
+                        Delete
                     </Button>
                 </Modal.Footer>
-            </Modal>
-            {/* Add operation */}
-             <Modal show={Addshow} onHide={handleClose} animation={true}>
-                <Modal.Header >
-                    <Modal.Title>Confirm Add Items</Modal.Title>
-                </Modal.Header>
-                 <Modal.Body>
-                     <Form className="mt-5" onSubmit={(e) => {e.preventDefault()}} >
-                         <Form.Group className="mb-3" controlId="formBasicText">
-                             <Form.Label>Title :</Form.Label>
-                             <Form.Control type="text" name="title" value={values.title} onChange={handleChange} />
-                         </Form.Group>
-                         <Form.Group className="mb-3" controlId="formBasicText">
-                             <Form.Label>Price :</Form.Label>
-                             <Form.Control type="text" name="price" value={values.price} onChange={handleChange} />
-                         </Form.Group>
-                         <Form.Group className="mb-3" controlId="formBasicText">
-                             <Form.Label>Description :</Form.Label>
-                             <Form.Control type="text" name="description" value={values.description} onChange={handleChange} />
-                         </Form.Group> 
-                         <Form.Group className="mb-3" controlId="formBasicText">
-                             <Form.Label> categoryId:</Form.Label>
-                             <Form.Control type="text" name="categoryId" value={values.categoryId} onChange={handleChange} />
-                         </Form.Group>
-                     </Form>
-                 </Modal.Body>
-                 <Modal.Footer>
-                    <Button variant="success" className="mx-2" onClick={handleAdd} >Add</Button>
-                    <Button onClick={handleAddcancel}>cancel</Button>
-                </Modal.Footer>
-             </Modal> 
+            </Modal>     
         </div>
     );
 }
