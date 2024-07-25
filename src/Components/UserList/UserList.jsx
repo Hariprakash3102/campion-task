@@ -1,15 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
-import { Button, Form, Modal, Table } from "react-bootstrap";
-import { Icon } from '@iconify/react';
-import '../Css/UserList.css';
-import Swal from "sweetalert2";
-import { TableHeader } from "../constant/data";  
 import moment from "moment";
+import Swal from "sweetalert2";
+import '../Css/UserList.css';
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Col, Modal, Row, Table } from "react-bootstrap";
+import { Icon } from '@iconify/react';
+import { TableHeader } from "../constant/data";  
+import { deleteApi, getApi } from "../ApiCall/Apicall";
+
 
 const UserList = () => { 
     const [data, SetData] = useState([]);
@@ -17,9 +18,10 @@ const UserList = () => {
     const [error, SetError] = useState(null); 
     const [show, SetShow] = useState(false);
     const [deleteId, SetdeleteId] = useState(null); 
+    const nav = useNavigate();      
 
     useEffect(() => {
-        axios.get('https://api.escuelajs.co/api/v1/products')
+        getApi()
             .then(response => {
                 SetData(response.data);
                 SetLoading(false);
@@ -40,7 +42,7 @@ const UserList = () => {
     const handleDelete = async () => {
         Swal.fire ({ title: "Deleted!", text: "Your file has been deleted.", icon: "success", timer: 1000})
         try {
-            await axios.delete(`https://api.escuelajs.co/api/v1/products/${deleteId}`);
+            await deleteApi(deleteId);
             SetData(data.filter(item => item.id !== deleteId));
             SetShow(false);
         } catch (e) {
@@ -55,33 +57,33 @@ const UserList = () => {
 
     return (
         <div>
-            <div className="row  m-0 vh-200">
+            <Row className="  m-0 ">
                 {/* Side bar start */}
-                <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block bg-white "   >
+                <Col xs={3} xl={2} className=" shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block bg-white "   >
                     <Sidebar />
-                </div>
+                </Col>
                 {/* Side bar end */}
 
-                <div className='col-12 col-lg-9 col-xl-10   m-0 p-0 '>
+                <Col xs={12} lg={9} xl={10} className='m-0 p-0 '>
                     {/* nav bar start */}
                     <Navbar />
                     {/* navbar end */}
                     <div className="text-center align-items-center mt-5" >
                         <h2 className=""> User List</h2>
                     </div >
-                    <div className="row m-0 d-flex flex-row ">
+                    <Row className="m-0 d-flex flex-row ">
 
-                        <div className="col-12 col-md-8 col-lg-6 col-xl-4 ms-auto position-relative">
-                            <input type="search" className="form-control rounded py-2 my-3 " />
+                        <Col xs={12} md={8} lg={6} xl={4} className="ms-auto position-relative">
+                            <input type="search" className="form-control rounded py-2 my-3 shadow-none" />
                             <span className="position-absolute top-50 end-0  translate-middle-y me-3">
                             <Icon icon="ic:round-search"  style={{color: '#8f958c', cursor: 'pointer'}} width={'35px'} />
                             </span>
-                        </div>
-                        <div className="col-1 d-flex ms-auto ms-md-0" style={{ width: '130px' }}>
-                           <Link to='/Dashboard/UserList/Create'>  <Button  className="my-3 justify-content-evenly fs-6 text-white fw-semibold border border-0" animation="true"
-                             style={{backgroundColor : '#8f958c'}}>+ Create</Button></Link>
-                        </div>
-                    </div>
+                        </Col>
+                        <Col xs={1} className=" d-flex ms-auto ms-md-0" style={{ width: '130px' }}>
+                           <Link to='/Dashboard/UserList/Create'>  <Button  className="my-3 justify-content-evenly fs-6 text-white fw-semibold border border-0 bg-dark" variant="none" animation="true"
+                            >+ Create</Button></Link>
+                        </Col>
+                    </Row>
                     {/* Dispaly table data */}
                     <div className="mx-2 overflow-auto">
                         <Table hover border border-0 className="overflow-auto mx-1">
@@ -96,7 +98,7 @@ const UserList = () => {
                             ( <tbody>
                                 <tr>
                                     <td colSpan="5">
-                                        <div className="d-flex justify-content-center align-items-center" style={{ height: '800px' }}>
+                                        <div className="d-flex justify-content-center align-items-center my-3">
                                             <Spinner animation="border" role="status" variant="info">
                                                 <span className="visually-hidden">Loading...</span>
                                             </Spinner>
@@ -120,21 +122,20 @@ const UserList = () => {
                             )}
                         </Table> 
                     </div> 
-                </div>
-            </div>
+                </Col>
+            </Row>
             {/* Delete Modal */}
-            <Modal show={show} onHide={handleClose} animation={false} timer={500}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Delete</Modal.Title>
+            <Modal show={show} onHide={handleClose} animation={false} timer={500} className="shadow-none">
+            <Modal.Header >
+                <Modal.Title>Confirm Delete</Modal.Title>
+                <Button variant='none'  className="btn-close" aria-label="Close" onClick={handleClose} style={{ boxShadow: 'none', outline: 'none' }} ></Button>
                 </Modal.Header>
                 <Modal.Body>Are you sure you want to delete this Data?</Modal.Body>
                 <Modal.Footer>
                     <Button variant="none" style={{border:'2px solid #8f958c', color: '#8f958c'}} onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className="text-white" style={{backgroundColor:'#8f958c'}} variant="none" onClick={handleDelete}>
-                        Delete
-                    </Button>
+                    <Button className="text-white bg-dark" variant="none" onClick={handleDelete}>  Delete  </Button>
                 </Modal.Footer>
             </Modal>     
         </div>

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../Css/Login.css";
 import logo from "../Assets/logo.png";
-import { Icon } from "@iconify/react";
-import { ErrorMessage, Formik, Field, Form } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginForm from "./LoginForm";
-import { invalid } from "moment";
 
 const gmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 // const password = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)[A-Za-z\d!@#$%^&*]{6,20}$/;
@@ -20,9 +18,10 @@ const validSchema = Yup.object().shape({
     .min(6, "Password must be at least 6 characters")
     .max(20, "Password must be at most 20 characters")
     .required("Password is Required")
-    // .test('has-uppercase', 'Password must have at least one uppercase letter', value => /[A-Z]/.test(value))
-    // .test('has-digit', 'Password must have at least one digit', value => /\d/.test(value))
-    // .test('has-special-char', 'Password must have at least one special character', value => /[!@#$%^&*]/.test(value))
+  // for future use
+  // .test('has-uppercase', 'Password must have at least one uppercase letter', value => /[A-Z]/.test(value))
+  // .test('has-digit', 'Password must have at least one digit', value => /\d/.test(value))
+  // .test('has-special-char', 'Password must have at least one special character', value => /[!@#$%^&*]/.test(value))
 });
 
 const Login = () => {
@@ -30,31 +29,30 @@ const Login = () => {
   const handlepasswordShow = () => SetShowpasword(!showpassword);
   const nav = useNavigate();
 
-  useEffect(() => {
-    localStorage.removeItem('1st_token');
-  }, []);
+  // useEffect(() => {
+  //   localStorage.removeItem('1st_token');
+  // }, []);
 
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={validSchema}
-      onSubmit={async (values ,{setError}) => {
-          try{
-            const response = await axios.post("https://api.escuelajs.co/api/v1/auth/login",{
-              email: values.email,
-              password: values.password
-            })
-            if(response.data.access_token){
-              localStorage.setItem('1st_token',response.data.access_token);
-              nav('/Dashboard');
-            }
-            else{
-              setError({server: 'invalid credentials'})
-            }
+      onSubmit={async (values, { setError }) => {
+        try {
+          //token generate
+          const response = await axios.post("https://api.escuelajs.co/api/v1/auth/login", {
+            email: values.email,
+            password: values.password
+          })
+          if (response.data.access_token) {
+            localStorage.setItem('1st_token', response.data.access_token);
+            nav('/Dashboard');
           }
-          catch(e){
-            setError({server: 'Error in logging in : please try again'})
-          }
+          else setError({ server: 'invalid credentials' })
+        }
+        catch (e) {
+          setError({ server: 'Error in logging in : please try again' })
+        }
       }}
     >
       {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
@@ -62,7 +60,7 @@ const Login = () => {
           <div className="col-11 col-md-6 col-lg-4 col-xl-3 align-items-center d-flex justify-content-center shadow-lg loginBox bg-white">
             <div className="col-11 py-5 pt-md-0 pb-md-3">
               <div className="d-flex justify-content-center my-2 pt-3">
-                <img src={logo} alt="Logo_Img" width={"230px"} />
+                <img src={logo} alt="Logo" width={"230px"} />
               </div>
               <hr />
               <p className="mb-4 text-center fs-5 fw-semibold">Login</p>

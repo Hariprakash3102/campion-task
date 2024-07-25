@@ -1,6 +1,11 @@
-*::-webkit-scrollbar{
+/* *::-webkit-scrollbar{
     display: none !important;
-}
+} */
 .Color{
     color: #fafafa !important ;
 }
+
+.modal-header .close {
+    box-shadow: none;
+    outline: none;
+  }

@@ -9,8 +9,7 @@ import Report from '../Assets/Report.png';
 import Store from '../Assets/store.png';
 import RightArrow from '../Assets/rightArrow.png';
 import '../Css/Sidebar.css'; 
-import {Link} from 'react-router-dom';
-import { Icon } from '@iconify/react'; 
+import {Link} from 'react-router-dom'; 
 
 
 const Sidebar = () =>{
@@ -23,7 +22,7 @@ const Sidebar = () =>{
     return(
         <div> 
             <div className='SideColor text-start'>
-              <Link to='/' ><img src={logo} className='img-fluid p-4 ms-1' alt="Logo" width={'220px'} /> </Link>
+              <Link to='/' ><img src={logo} className='img-fluid p-4 ms-1' alt="Logo" width={'220px'}  onClick={ () => {localStorage.removeItem('1st_token')}}/> </Link>
               <div className=' ps-4 my-3 '>
                 <img src={Dashboard} width={'20px'} alt="Dashboard" /> <Link to='/Dashboard'  className='text-decoration-none SideColor' >Dashboard</Link>
               </div>
@@ -41,11 +40,10 @@ const Sidebar = () =>{
                 <span className='float-end me-5'>
                   <img src={RightArrow} width={'20px'} alt="Right Arrow" />
                 </span>
-              </div> 
-
+              </div>  
                 <div className='ps-4 mb-3 Management rounded p-1' onClick={toggleList} >
                   <img src={Management} width={'20px'} alt="Management" /> Management 
-                  <span className='float-end me-5'>
+                  <span className='float-end me-5 '>
                   <img src={RightArrow} width={'20px'} alt="Right Arrow"  className={`toggle-icon ${isOpen ? 'open' : ''}`} /> 
                   </span>       
                 </div>  
@@ -53,7 +51,7 @@ const Sidebar = () =>{
                   <div className='ps-4 mb-3'>
                     <ul>
                       <li className='mb-3'>Room Management</li>
-                      <li className='mb-3'> <Link to='/Management' className='text-decoration-none SideColor'>Activity Management</Link> </li>
+                      <li className='mb-3'> <Link to='/management' className='text-decoration-none SideColor'>Activity Management</Link> </li>
                       <li className='mb-3'>Event Management</li>
                       <li className='mb-3'>Guide Management</li>
                       <li className='mb-3'>Subscription/Amenities</li>
@@ -65,23 +63,7 @@ const Sidebar = () =>{
               </div> 
             </div>
         </div>
-      
+      //  onClick={localStorage.removeItem('1st_token')}
     );
   }  
-export default Sidebar;
-  {/* <Accordion className=' mb-3 SideColor rounded  border-0'  >
-      <Accordion.Item eventKey="0">
-        <Accordion.Header className='py-1  border-0 bg-white'><img src={Management} width={'20px'} alt="Management" className='me-2 ' /> <p className='SideColor p-0 m-0 '>Management</p> </Accordion.Header>
-        <Accordion.Body className=' border-0'>
-        <div className='mb-3'>
-          <ul className=''>
-            <li className='mb-3 SideColor'>Room Management</li>
-            <li className='mb-3 SideColor'><Link to='/Management' className='text-decoration-none SideColor'>Activity Management</Link></li>
-            <li className='mb-3 SideColor '>Event Management</li>
-            <li className='mb-3 SideColor ' >Guide Management</li>
-            <li className='mb-3 SideColor '>Subscription/Amenities</li>
-          </ul>
-        </div>
-        </Accordion.Body>
-      </Accordion.Item>
-  </Accordion> */}
+export default Sidebar; 

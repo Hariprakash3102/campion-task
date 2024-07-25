@@ -3,9 +3,10 @@ import {Link, useParams } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import Table from 'react-bootstrap/Table';
-import { Button, Spinner } from "react-bootstrap";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import axios from "axios";
+import { Button, Col, Row, Spinner } from "react-bootstrap";
+import { Icon } from "@iconify/react/dist/iconify.js"; 
+import { getidApi } from "../ApiCall/Apicall";
+import moment from "moment";
 const UserDetails = () => {
 
     const {Id}= useParams(); 
@@ -16,7 +17,7 @@ const UserDetails = () => {
     useEffect(  () => { 
         const ProductDetails = async () =>{
             try{
-                const response = await axios.get(`https://api.escuelajs.co/api/v1/products/${Id}`);
+                const response = await getidApi(Id);
                 SetData(response.data);
                 SetLoading(false);
             }
@@ -40,14 +41,14 @@ const UserDetails = () => {
 
     return(
         <div >
-            <div className="row  m-0 vh-200 " >
+            <Row className=" m-0" >
                 {/* Side bar start */}
-                <div className="col-3 col-xl-2 shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block bg-white "   >
+                <Col xs={3} xl={2} className="shadow-md-none shadow-lg-sm vh-100 sticky-top d-none d-lg-block bg-white "   >
                     <Sidebar />
-                </div>
+                </Col>
                 {/* Side bar end */} 
 
-                <div className='col-12 col-lg-9 col-xl-10   m-0 p-0 '>
+                <Col xs={12} lg={9} xl={10} className=' m-0 p-0 '>
                     {/* nav bar start */}
                     <Navbar /> 
                     {/* navbar end */} 
@@ -66,8 +67,8 @@ const UserDetails = () => {
                             </li>
                             ))}
                         </ul>
-                        <p>Creation At: {new Date(data.creationAt).toLocaleString()}</p>
-                        <p>Updated At: {new Date(data.updatedAt).toLocaleString()}</p>
+                        <p>Creation At: { moment(new Date(data.creationAt).toLocaleString()).format('L')   }</p>
+                        <p>Updated At: { moment(new Date(data.updatedAt).toLocaleString()).format('L')   }</p>
                         <h3 className="py-3">Category</h3>
                         <Table className="border w-100 overflow-auto">
                             <thead className="border">
@@ -84,18 +85,18 @@ const UserDetails = () => {
                                     <td>HPL{data.category.id}</td>
                                     <td>{data.category.name}</td>
                                     <td><img src={data.category.image} alt={data.category.name} width="100" /></td>
-                                    <td> {data.creationAt}</td>
-                                    <td>{data.updatedAt}</td> 
+                                    <td> { moment(new Date(data.creationAt).toLocaleString()).format('L')   }</td>
+                                    <td>{ moment(new Date(data.updatedAt).toLocaleString()).format('L')   }</td> 
                                 </tr> 
                             </tbody>
                         </Table>  
                         <div className="justify-content-center d-flex gap-2">
-                            <Link to={`/Dashboard/UserList/Edit/${Id}`}> <Button variant="none"  style={{backgroundColor:'#8f958c'}} className="text-white"> <Icon icon="mdi:edit" style={{ color: ' #ffffff' }} width={'20px'} /> Edit</Button></Link>
+                            <Link to={`/Dashboard/UserList/Edit/${Id}`}> <Button variant="none" className="text-white bg-dark"> <Icon icon="mdi:edit" style={{ color: ' #ffffff' }} width={'20px'} /> Edit</Button></Link>
                             <Link to='/Dashboard/UserList'><Button variant="none"  style={{border:'2px solid #8f958c', color: '#8f958c'}}>Cancel</Button></Link>
                         </div>
                     </div>  
-                </div> 
-            </div> 
+                </Col> 
+            </Row> 
         </div>
     );
 }
