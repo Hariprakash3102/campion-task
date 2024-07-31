@@ -12,6 +12,7 @@ export const DashboardContent = [
 
 export const TableHeader =[
     {name:'S.no'},
+    {name:"Customer Id"},
     {name:'Title'},
     {name:'Price'},
     {name:'Date'},

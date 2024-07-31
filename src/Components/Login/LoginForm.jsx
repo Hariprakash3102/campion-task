@@ -30,10 +30,7 @@ const LoginForm = (props) => {
                     placeholder="Enter the Password" onChange={props.handleChange}
                     onBlur={props.handleBlur} value={props.values.password}
                   />
-                  <div
-                    className="eyeIcon position-absolute Color"
-                    onClick={props.handlepasswordShow}
-                  >
+                  <div className="eyeIcon position-absolute Color" onClick={props.handlepasswordShow} >
                     <Icon
                       icon={ props.showpassword ? "clarity:eye-hide-line" : "clarity:eye-line" }  width={"25px"} />{" "}
                   </div>

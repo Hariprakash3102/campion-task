@@ -13,8 +13,8 @@ const Navbar = () =>{
     const handleShow = () => setShow(true);
     return(
         <div>
-            <div className="pt-1 bg-white height">
-                <div className=" ms-3 d-flex flex-row sticky-top ">
+            <div className="pt-1 bg-white height ms-auto">
+                <div className=" ms-3 d-flex flex-row ">
                     <div className='mt-1  d-none d-md-block'>
                         <div className='btn btn-sm border me-2 px-3'>+ Reservation</div>
                     </div>
