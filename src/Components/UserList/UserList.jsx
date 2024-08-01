@@ -9,13 +9,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Col, Modal, Row, Table } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import { TableHeader } from "../constant/data";  
-import { deleteApi, getApi } from "../ApiCall/Apicall";
+import { deleteApi } from "../ApiCall/Apicall";
 import ReactPaginate from 'react-paginate';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRedux } from '../../slices/slices';
 
 const UserList = () => { 
-    const [data, SetData] = useState([]);
-    const [loading, SetLoading] = useState(true);
-    const [error, SetError] = useState(null); 
+    // const [data, SetData] = useState([]);
+    // const [loading, SetLoading] = useState(true);
+    // const [error, SetError] = useState(null); 
+    const {data,isLoading,error} = useSelector(state => state.getUserList);
     const [show, SetShow] = useState(false);
     const [deleteId, SetdeleteId] = useState(null); 
     const nav = useNavigate();      
@@ -23,18 +26,21 @@ const UserList = () => {
     const [save, setSave] = useState("");
     const [item, setItem] = useState(0);
     const itemPerpage = 10;
+    const dispatch = useDispatch();
 
+    
+    // getApi()
+    //     .then(response => {
+    //         SetData(response.data);
+    //         SetLoading(false);
+    //     })
+    //     .catch(e => {
+    //         SetError(e);
+    //         SetLoading(false);
+    //     });
     useEffect(() => {
-        getApi()
-            .then(response => {
-                SetData(response.data);
-                SetLoading(false);
-            })
-            .catch(e => {
-                SetError(e);
-                SetLoading(false);
-            });
-    }, []);
+        dispatch(getRedux())
+    }, [dispatch]);
 
     const handlePageClick = (event) => {
         const nextPage = event.selected;
@@ -52,7 +58,7 @@ const UserList = () => {
         Swal.fire ({ title: "Deleted!", text: "Your file has been deleted.", icon: "success", timer: 1000})
         try {
             await deleteApi(deleteId);
-            SetData(data.filter(item => item.id !== deleteId));
+            data(data.filter(item => item.id !== deleteId));
             SetShow(false);
         } catch (e) {
             console.error(`Error:`, e);
@@ -124,10 +130,10 @@ const UserList = () => {
                                     ))}
                                 </tr>
                             </thead>
-                            {loading ? (
+                            {isLoading ? (
                                 <tbody>
                                     <tr>
-                                        <td colSpan="5">
+                                        <td colSpan="6">
                                             <div className="d-flex justify-content-center align-items-center my-3">
                                                 <Spinner animation="border" role="status" variant="info">
                                                     <span className="visually-hidden">Loading...</span>
