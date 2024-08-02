@@ -7,28 +7,32 @@ import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { Icon } from "@iconify/react/dist/iconify.js"; 
 import { getidApi } from "../ApiCall/Apicall";
 import moment from "moment";
+import { useGetidRtkQuery } from "../../slices/slices";
+
 const UserDetails = () => {
 
     const {Id}= useParams(); 
-    const [data,SetData] = useState(""); 
-    const [loading,SetLoading] = useState(true); 
-    const [error,SetError] = useState(""); 
+    const {data,error,isLoading} = useGetidRtkQuery(Id);
+    // const [data,SetData] = useState(""); 
+    // const [loading,SetLoading] = useState(true); 
+    // const [error,SetError] = useState(""); 
 
-    useEffect(  () => { 
-        const ProductDetails = async () =>{
-            try{
-                const response = await getidApi(Id);
-                SetData(response.data);
-                SetLoading(false);
-            }
-            catch (e){
-                SetError(e);
-                SetLoading(false);
-            }
-        }; 
-        ProductDetails();
-    },[Id]) 
-    if(loading){
+    // useEffect(  () => { 
+    //     const ProductDetails = async () =>{
+    //         try{
+    //             const response = await getidApi(Id);
+    //             SetData(response.data);
+    //             SetLoading(false);
+    //         }
+    //         catch (e){
+    //             SetError(e);
+    //             SetLoading(false);
+    //         }
+    //     }; 
+    //     ProductDetails();
+    // },[Id]) 
+
+    if(isLoading){
         return(
             <div className="d-flex justify-content-center align-items-center vh-100">
                 <Spinner animation="border" role="status" variant="info"> 

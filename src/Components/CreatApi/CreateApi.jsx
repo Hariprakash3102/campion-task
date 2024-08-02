@@ -8,25 +8,29 @@ import Navbar from "../Navbar/Navbar";
 import { postApi } from "../ApiCall/Apicall";
 import { Formik } from "formik";
 import * as Yup from 'yup';
+import { useGetRtkQuery, usePostRtkMutation } from "../../slices/slices";
 
 const CreateApi = () => {
     const initialValues = { title: '', price: 0, description: '', images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'], categoryId: 0, };
-    const [data, SetData] = useState([]);
+    // const [data, SetData] = useState([]);
     const nav = useNavigate();
+    const [postItem] = usePostRtkMutation();
+    const {refetch} = useGetRtkQuery();
 
 
-    const handleCreate = (value) => {
-        postApi(value)
-            .then(response => {
-                SetData([...data, response.data]);
-                Swal.fire({ position: "top-center", icon: "success", title: "saved", showConfirmButton: false, timer: 1500 });
-                nav('/Dashboard/UserList');
-            })
-            .catch(e => {
-                console.error(e);
-                alert('try again');
-
-            })
+    const handleCreate = async (values) => {
+        try{
+            await postItem(values).unwrap();
+            Swal.fire({ position: "top-center", icon: "success",
+                 title: "saved", showConfirmButton: false, timer: 1500 });
+            refetch();
+            nav('/Dashboard/UserList');  
+        }
+        catch(e) {
+            console.error(e);
+            Swal.fire({ position: "top-center", icon: "danger",
+                title: "Try again", showConfirmButton: false, timer: 1500 });
+         }
     };
 
     const handleCancel = () => {

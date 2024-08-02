@@ -8,49 +8,53 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getidApi, putApi } from "../ApiCall/Apicall";
 import { Formik } from "formik";
 import * as Yup from 'yup';
+import { useGetidRtkQuery, useGetRtkQuery, usePutRtkMutation } from "../../slices/slices";
 
 const EditApi = () => {
 
-    const InitialValue = { id: 0, title: '', price: 0, description: '', } 
     const { EditId } = useParams(); 
     const Nav = useNavigate(); 
-    const [data, SetData] = useState("") 
-    const [loading, SetLoading] = useState(true); 
-    const [error, SetError] = useState(""); 
-    const [info, SetInfo] = useState(InitialValue);
+    // const [data, SetData] = useState("") 
+    // const [loading, SetLoading] = useState(true); 
+    // const [error, SetError] = useState(""); 
+    // const [info, SetInfo] = useState(InitialValue);
+    
+    const [putItem] = usePutRtkMutation();
+    const {data, error, isLoading} = useGetidRtkQuery(EditId);
+    const {refetch}=useGetRtkQuery();
 
-    useEffect(() => {
-        const ProductDetails = async () => {
-            try {
-                const response = await getidApi(EditId);
-                SetData(response.data);
-                SetInfo({
-                    id: response.data.id,
-                    title: response.data.title,
-                    price: response.data.price,
-                    description: response.data.description,
-                });
-                SetLoading(false);
-            }
-            catch (e) {
-                SetError(e);
-                SetLoading(false);
-            }
-        };
-        ProductDetails();
-    }, [EditId]);
+    // useEffect(() => {
+    //     const ProductDetails = async () => {
+    //         try {
+    //             const response = await getidApi(EditId);
+    //             SetData(response.data);
+    //             SetInfo({
+    //                 id: response.data.id,
+    //                 title: response.data.title,
+    //                 price: response.data.price,
+    //                 description: response.data.description,
+    //             });
+    //             SetLoading(false);
+    //         }
+    //         catch (e) {
+    //             SetError(e);
+    //             SetLoading(false);
+    //         }
+    //     };
+    //     ProductDetails();
+    // }, [EditId]); 
 
-    const handleUpdate = async (value) => {
+    const handleUpdate =  async (values) => {
+        const payload ={...values, images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s']}
         try {
-            const response = await putApi(EditId, value);
-            console.log(response.data);
-            SetData(response);
-            Swal.fire({ title: "Updated!", text: "Data updated successfully!", icon: "success", timer: 500 });
+            await putItem( {id: EditId , ...payload});
+            Swal.fire({ title: "Updated!", text: "Data updated successfully!", icon: "success", timer: 500 }); 
+            refetch();
             Nav('/Dashboard/UserList');
         }
         catch (e) {
             console.error('Error ', e);
-            SetLoading(false);
+            isLoading(false);
         };
     }
 
@@ -73,16 +77,24 @@ const EditApi = () => {
             Nav('/Dashboard/UserList');
         }
         catch (e) {
-            console.error('Error: ', e);
+            console.error('Error: ', error );
         }
     } 
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="d-flex justify-content-center align-items-center vh-100">
                 <Spinner animation="border" role="status" variant="info">
                 </Spinner>
                 <span className="text-info">Loading</span>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <p className="text-danger">Failed to load data. Please try again.</p>
             </div>
         );
     }
@@ -120,19 +132,19 @@ const EditApi = () => {
 
                                 {({ errors, touched, values, handleChange, handleSubmit }) => (
                                     <Form className="mt-5" onSubmit={handleSubmit} >
-                                        <Form.Group className="mb-3 " controlId="formBasicId">
+                                        <Form.Group className="mb-3 ">
                                             <Form.Label className="" htmlF="id"> Id :  </Form.Label>
                                             <Form.Control type="text" name="id" id="id" value={data.id} readOnly />
                                         </Form.Group>
-                                        <Form.Group className="mb-3" controlId="formBasicTitle" >
+                                        <Form.Group className="mb-3"  >
                                             <Form.Label htmlF="title"> Title : </Form.Label>
                                             <Form.Control type="text" name="title" id="title" value={values.title} isInvalid={!!errors.title && touched.title} onChange={handleChange} />
                                         </Form.Group>
-                                        <Form.Group className="mb-3" controlId="formBasicPrice">
+                                        <Form.Group className="mb-3" >
                                             <Form.Label htmlF="price"> Price : </Form.Label>
                                             <Form.Control type="text" name="price" id="price" value={values.price} isInvalid={!!errors.price && touched.price} onChange={handleChange} />
                                         </Form.Group>
-                                        <Form.Group className="mb-3" controlId="formBasicDescription">
+                                        <Form.Group className="mb-3">
                                             <Form.Label htmlF="description"> Description : </Form.Label>
                                             <Form.Control type="text" name="description" id="description" value={values.description} isInvalid={!!errors.description && touched.description} onChange={handleChange} />
                                         </Form.Group>

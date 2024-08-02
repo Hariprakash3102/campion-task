@@ -12,13 +12,15 @@ import { TableHeader } from "../constant/data";
 import { deleteApi } from "../ApiCall/Apicall";
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRedux } from '../../slices/slices';
+import {useDeleteRtkMutation, useGetRtkQuery } from '../../slices/slices';
 
 const UserList = () => { 
     // const [data, SetData] = useState([]);
     // const [loading, SetLoading] = useState(true);
     // const [error, SetError] = useState(null); 
-    const {data,isLoading,error} = useSelector(state => state.getUserList);
+    const {data,isLoading,error,refetch} = useGetRtkQuery();
+
+    const [deleteItem] =useDeleteRtkMutation();
     const [show, SetShow] = useState(false);
     const [deleteId, SetdeleteId] = useState(null); 
     const nav = useNavigate();      
@@ -26,21 +28,12 @@ const UserList = () => {
     const [save, setSave] = useState("");
     const [item, setItem] = useState(0);
     const itemPerpage = 10;
-    const dispatch = useDispatch();
 
-    
-    // getApi()
-    //     .then(response => {
-    //         SetData(response.data);
-    //         SetLoading(false);
-    //     })
-    //     .catch(e => {
-    //         SetError(e);
-    //         SetLoading(false);
-    //     });
-    useEffect(() => {
-        dispatch(getRedux())
-    }, [dispatch]);
+    // const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     dispatch(getRedux())
+    // }, [dispatch]);
 
     const handlePageClick = (event) => {
         const nextPage = event.selected;
@@ -57,8 +50,8 @@ const UserList = () => {
     const handleDelete = async () => {
         Swal.fire ({ title: "Deleted!", text: "Your file has been deleted.", icon: "success", timer: 1000})
         try {
-            await deleteApi(deleteId);
-            data(data.filter(item => item.id !== deleteId));
+            await deleteItem(deleteId);
+            refetch();
             SetShow(false);
         } catch (e) {
             console.error(`Error:`, e);
@@ -70,9 +63,9 @@ const UserList = () => {
     if (error)
         return <h2>Page Not Found : 404 ERROR</h2>
 
-    const filteredData = data.filter(item => 
-        save.toLowerCase() === '' ? true : item.title.toLowerCase().includes(save.toLowerCase())
-    );
+    const filteredData = data ? data.filter(item => 
+        search.toLowerCase() === '' ? true : item.title.toLowerCase().includes(search.toLowerCase())
+    ) : [];
 
     const firstOffset = item * itemPerpage;
     const LastOffset = firstOffset + itemPerpage;

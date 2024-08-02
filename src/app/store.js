@@ -1,10 +1,12 @@
-import {configureStore} from '@reduxjs/toolkit'
-import addSlices from '../slices/slices'
+import {configureStore} from '@reduxjs/toolkit' 
+import { rtkQuery } from '../slices/slices'
 
 export const store = configureStore({
-      reducer : {
-         getUserList: addSlices,
-
-    }
-})
+    reducer : {
+        [rtkQuery.reducerPath]: rtkQuery.reducer,
+        
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(rtkQuery.middleware),
+});
 
