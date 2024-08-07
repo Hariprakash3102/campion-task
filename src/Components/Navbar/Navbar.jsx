@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import user from '../Assets/user.png';
-import ToggleButton from '../Assets/Toggle.png'
+import user from '../../Assets/user.png';
+import ToggleButton from '../../Assets/Toggle.png'
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Sidebar from '../Sidebar/Sidebar';
-import '../Css/Navbar.css'
+import '../../Css/Navbar.css'
 
 const Navbar = () =>{
     const [show, setShow] = useState(false);

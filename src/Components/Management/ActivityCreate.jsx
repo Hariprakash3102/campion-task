@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../Css/ActivityCreate.css';
+import '../../Css/ActivityCreate.css'
 import Form from 'react-bootstrap/Form';
-import ToastFunction from '../ToastFunction/ToastFunction';
+import ToastFunction from './ToastFunction';
 
 const ActivityCreate = () => { 
     const [showCancel, setShowCancel] = useState(false);

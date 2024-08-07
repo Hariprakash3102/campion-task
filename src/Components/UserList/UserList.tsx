@@ -3,44 +3,56 @@ import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import moment from "moment";
 import Swal from "sweetalert2";
-import '../Css/UserList.css';
-import { useEffect, useState } from "react";
+import '../../Css/UserList.css';
+import React, {ChangeEvent, useEffect, useState  } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Col, Modal, Row, Table } from "react-bootstrap";
 import { Icon } from '@iconify/react';
-import { TableHeader } from "../constant/data";  
-import { deleteApi } from "../ApiCall/Apicall";
+import { TableHeader } from "../../constant/data";  
+// import { deleteApi } from "../ApiCall/Apicall"; //future refrence
 import ReactPaginate from 'react-paginate';
-import { useDispatch, useSelector } from 'react-redux';
-import {useDeleteRtkMutation, useGetRtkQuery } from '../../slices/slices';
+// import { useDispatch, useSelector } from 'react-redux'; //future refrence
+import {useDeleteRtkMutation, useGetRtkQuery,usePaginateRtkQuery } from '../../RtkQuery/slices';
 
-const UserList = () => { 
+const UserList: React.FC = () => { 
+
+    interface userList {
+        id:number,
+        title:string,
+        price:number, 
+        creationAt: Date
+    }
+
+//refrence for redux and axios CURD operation
     // const [data, SetData] = useState([]);
     // const [loading, SetLoading] = useState(true);
     // const [error, SetError] = useState(null); 
-    const {data,isLoading,error,refetch} = useGetRtkQuery();
-
-    const [deleteItem] =useDeleteRtkMutation();
-    const [show, SetShow] = useState(false);
-    const [deleteId, SetdeleteId] = useState(null); 
-    const nav = useNavigate();      
-    const [search, setSearch] = useState("");
-    const [save, setSave] = useState("");
-    const [item, setItem] = useState(0);
-    const itemPerpage = 10;
-
     // const dispatch = useDispatch();
+    const {data,isLoading,error,refetch} = useGetRtkQuery({});
+    
+    const [deleteItem] =useDeleteRtkMutation();
+    const [show, SetShow] = useState<boolean>(false);
+    const [submit, setSubmit] = useState<boolean>(false);
+    const [deleteId, SetdeleteId] = useState<number>(); 
+    const nav = useNavigate();      
+    const [search, setSearch] = useState<string>("");
+    const [save, setSave] = useState<string>("");
+    const [item, setItem] = useState<number>(0);
+    const itemPerpage: number = 10;
 
-    // useEffect(() => {
-    //     dispatch(getRedux())
-    // }, [dispatch]);
+// for reference by API call paginate 
+    // const offset: number = item * itemPerpage;
+    // const {data,isLoading,error,refetch} = usePaginateRtkQuery({ offset: offset, limit: itemPerpage });
 
-    const handlePageClick = (event) => {
-        const nextPage = event.selected;
-        setItem(nextPage);
+    useEffect(() => {
+        refetch();      
+    }, []);
+
+    const handlePageClick = (event: {selected: number}) => { 
+        setItem(event.selected);
     }
 
-    const handleShow = (id) => {
+    const handleShow = (id: number) => {
         SetdeleteId(id);
         SetShow(true);
     };
@@ -48,6 +60,7 @@ const UserList = () => {
     const handleClose = () => SetShow(false);
 
     const handleDelete = async () => {
+        setSubmit(true);
         Swal.fire ({ title: "Deleted!", text: "Your file has been deleted.", icon: "success", timer: 1000})
         try {
             await deleteItem(deleteId);
@@ -58,19 +71,19 @@ const UserList = () => {
             alert("Try Again");
             SetShow(false);
         }
+        finally{
+            setSubmit(false);
+        }
     };
 
-    if (error)
-        return <h2>Page Not Found : 404 ERROR</h2>
-
-    const filteredData = data ? data.filter(item => 
-        search.toLowerCase() === '' ? true : item.title.toLowerCase().includes(search.toLowerCase())
+    const filteredData: userList[] = data ? data.filter((item: { title: string; }) => 
+        search.toLowerCase() === '' ? true : item.title.toLowerCase().includes(search.toLowerCase())     
     ) : [];
 
-    const firstOffset = item * itemPerpage;
-    const LastOffset = firstOffset + itemPerpage;
-    const perPage = filteredData.slice(firstOffset, LastOffset);
-    const pageCount = Math.ceil(filteredData.length / itemPerpage);
+    const firstOffset: number = item * itemPerpage;
+    const LastOffset: number = firstOffset + itemPerpage;
+    const perPage: userList[]  = filteredData.slice(firstOffset, LastOffset);
+    const pageCount: number = Math.ceil(filteredData.length / itemPerpage);
 
     return (
         <div>
@@ -91,34 +104,24 @@ const UserList = () => {
                             <input
                                 type="search"
                                 className="form-control rounded py-2 my-3 shadow-none pe-5"
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
                             />
                             <span className="position-absolute top-50 end-0 translate-middle-y me-3">
-                                <Icon
-                                    icon="ic:round-search"
-                                    style={{ color: '#8f958c', cursor: 'pointer' }}
-                                    width={'35px'}
-                                    onClick={() => { setSave(search) }}
-                                />
+                                <Icon  icon="ic:round-search"  className='searchStyle' width={'35px'} onClick={() => { setSave(search) }}  />
                             </span>
                         </Col>
-                        <Col xs={1} className="d-flex ms-auto ms-md-0" style={{ width: '130px' }}>
+                        <Col xs={1} className="d-flex ms-auto ms-md-0 createButton">
                             <Link to='/Dashboard/UserList/Create'>
-                                <Button
-                                    className="my-3 justify-content-evenly fs-6 text-white fw-semibold border border-0 bg-dark"
-                                    variant="none"
-                                    animation="true"
-                                >
-                                    + Create
-                                </Button>
+                                <Button  className="my-3 justify-content-evenly fs-6 text-white fw-semibold border border-0 bg-dark"
+                                    variant="none"> + Create </Button>
                             </Link>
                         </Col>
                     </Row>
                     <div className="mx-2 overflow-y-scroll overflow-x-auto tableHeight">
-                        <Table hover border border-0 className="mx-1">
+                        <Table hover border-0 className="mx-1">
                             <thead className='sticky-top'>
                                 <tr>
-                                    {TableHeader.map((item, index) => (
+                                    {TableHeader.map((item, index:number) => (
                                         <th key={index}>{item.name}</th>
                                     ))}
                                 </tr>
@@ -126,26 +129,22 @@ const UserList = () => {
                             {isLoading ? (
                                 <tbody>
                                     <tr>
-                                        <td colSpan="6">
-                                            <div className="d-flex justify-content-center align-items-center my-3">
-                                                <Spinner animation="border" role="status" variant="info">
-                                                    <span className="visually-hidden">Loading...</span>
-                                                </Spinner>
-                                            </div>
+                                        <td colSpan={6} className='text-center'> 
+                                                <Spinner animation="border" variant="info" />   
                                         </td>
                                     </tr>
                                 </tbody>
                             ) : (
                                 <tbody>
-                                    {perPage.map((item, index) => (
+                                    {perPage.map((item: userList, index: number) => (
                                         <tr key={item.id}>
                                             <td> <Link to={`/Dashboard/UserList/${item.id}`} className="text-decoration-none text-dark"> {firstOffset + index + 1} </Link> </td>
                                             <td> <Link to={`/Dashboard/UserList/${item.id}`} className="text-decoration-none text-dark">  {item.id}  </Link> </td>
                                             <td>  <Link to={`/Dashboard/UserList/${item.id}`} className="text-decoration-none text-dark">  {item.title} </Link> </td>
                                             <td>  <Link to={`/Dashboard/UserList/${item.id}`} className="text-decoration-none text-dark"> ${item.price}  </Link> </td>
                                             <td> <Link to={`/Dashboard/UserList/${item.id}`} className="text-decoration-none text-dark"> {moment(item.creationAt).subtract(10, 'days').calendar()}  </Link> </td>
-                                            <td> <Link to={`/Dashboard/UserList/Edit/${item.id}`} className="text-decoration-none mx-2">  <Icon icon="mdi:edit" style={{ color: ' #8f958c' }} width={'25px'} /> </Link> 
-                                                <Button className="border border-0" variant="link" type='submit'> <Icon icon="ic:baseline-delete" style={{ color: ' #ff0000' }} onClick={() => handleShow(item.id)} width={'25px'} /> </Button>
+                                            <td> <Link to={`/Dashboard/UserList/Edit/${item.id}`} className="text-decoration-none mx-2">  <Icon icon="mdi:edit" className='editStyle' width={'25px'} /> </Link> 
+                                                <Button className="border border-0" variant="link" type='submit'> <Icon icon="ic:baseline-delete" className='deleteStyle' onClick={() => handleShow(item.id)} width={'25px'} /> </Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -154,8 +153,8 @@ const UserList = () => {
                         </Table>
                     </div> 
                     <ReactPaginate
-                        breakLabel="..." nextLabel="next >" previousLabel="< previous"
-                        pageCount={pageCount} onPageChange={handlePageClick}
+                        breakLabel="..." nextLabel="Next >" previousLabel="< Previous"
+                        pageCount={pageCount} onPageChange={handlePageClick} 
                         containerClassName={'pagination mt-3 justify-content-center'}
                         pageClassName='page-item text-dark px-2'
                         pageLinkClassName='page-link shadow-none text-dark border border-0 rounded'
@@ -166,23 +165,24 @@ const UserList = () => {
                         activeClassName='page-item active'
                         activeLinkClassName='page-link text-white bg-dark fw-semibold shadow-none border border-0 rounded'
                         breakClassName='page-item'
-                        breakLinkClassName='page-link text-dark fw-semibold shadow-none bg-white border border-0 rounded'
+                        breakLinkClassName='page-link text-dark fw-semibold shadow-none bg-white border border-0 rounded' 
                     />
                 </Col>
+                {error && 'Page Not Found : 404 ERROR'}
             </Row> 
 
             {/* Delete Modal */}
             <Modal show={show} onHide={handleClose} animation={false} timer={500} className="shadow-none">
                 <Modal.Header>
                     <Modal.Title>Confirm Delete</Modal.Title>
-                    <Button variant='none' className="btn-close" aria-label="Close" onClick={handleClose} style={{ boxShadow: 'none', outline: 'none' }}></Button>
+                    <Button variant='none' className="btn-close close-Button" aria-label="Close" onClick={handleClose} ></Button>
                 </Modal.Header>
                 <Modal.Body>Are you sure you want to delete this Data?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="none" style={{ border: '2px solid #8f958c', color: '#8f958c' }} onClick={handleClose}>
+                    <Button variant="none" className='cancelButtonStyle' onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button className="text-white bg-dark" variant="none" onClick={handleDelete}>Delete</Button>
+                    <Button className="text-white bg-dark" variant="none" onClick={handleDelete} disabled={submit}> Delete</Button>
                 </Modal.Footer>
             </Modal>
         </div>

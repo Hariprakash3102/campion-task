@@ -1,0 +1,43 @@
+*::-webkit-scrollbar{
+    display: none !important;
+}
+.Color{
+    color: #fafafa !important ;
+}
+
+.modal-header .close {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .tableHeight{
+    /* height: 80vh !important; */
+  }
+
+  .searchStyle{
+    color: #8f958c !important;
+    cursor: pointer !important;
+  }
+
+  .createButton{
+    width: 130px;
+  }
+  .editStyle{
+     color:  #8f958c !important;
+  }
+  .deleteStyle{
+    color: #ff0000 !important;
+  }
+  .cancelButtonStyle{
+    border: 2px solid #8f958c; 
+    color: #8f958c;
+  }
+  .cancelButtonStyle:hover{
+    border: 2px solid #8f958c; 
+    color: #8f958c;
+  }
+
+  .close-Button{
+    box-shadow: none; outline: none; 
+  }
+  

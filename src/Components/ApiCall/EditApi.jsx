@@ -1,27 +1,27 @@
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
-import '../Css/EditApi.css'
+import '../../Css/EditApi.css'
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { getidApi, putApi } from "../ApiCall/Apicall";
 import { Formik } from "formik";
 import * as Yup from 'yup';
-import { useGetidRtkQuery, useGetRtkQuery, usePutRtkMutation } from "../../slices/slices";
+import { useGetidRtkQuery, useGetRtkQuery, usePutRtkMutation } from "../../RtkQuery/slices";
 
 const EditApi = () => {
 
     const { EditId } = useParams(); 
     const Nav = useNavigate(); 
+    const [submit , setSubmit ]= useState(false);
     // const [data, SetData] = useState("") 
     // const [loading, SetLoading] = useState(true); 
     // const [error, SetError] = useState(""); 
     // const [info, SetInfo] = useState(InitialValue);
     
     const [putItem] = usePutRtkMutation();
-    const {data, error, isLoading} = useGetidRtkQuery(EditId);
-    const {refetch}=useGetRtkQuery();
+    const {data, error, isLoading} = useGetidRtkQuery(EditId); 
 
     // useEffect(() => {
     //     const ProductDetails = async () => {
@@ -45,16 +45,21 @@ const EditApi = () => {
     // }, [EditId]); 
 
     const handleUpdate =  async (values) => {
+        setSubmit(true);
         const payload ={...values, images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s']}
         try {
+           
             await putItem( {id: EditId , ...payload});
-            Swal.fire({ title: "Updated!", text: "Data updated successfully!", icon: "success", timer: 500 }); 
-            refetch();
+            Swal.fire({ title: "Updated!", text: "Data updated successfully!", icon: "success", timer: 500 });  
             Nav('/Dashboard/UserList');
         }
         catch (e) {
+            setSubmit(true);
             console.error('Error ', e);
             isLoading(false);
+        }
+        finally{
+            setSubmit(false);
         };
     }
 
@@ -149,7 +154,15 @@ const EditApi = () => {
                                             <Form.Control type="text" name="description" id="description" value={values.description} isInvalid={!!errors.description && touched.description} onChange={handleChange} />
                                         </Form.Group>
                                         <div className="d-flex justify-content-center">
-                                            <Button variant='none' className="mx-2 bg-dark text-white updateBtn" type="submit">Update</Button>
+                                            <Button variant='none' className="mx-2 bg-dark text-white updateBtn" type="submit" disabled={submit}>
+                                            {submit ? (
+                                                    <>
+                                                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                                                    Updating...
+                                                    </>
+                                                ) : (
+                                                    'Update'
+                                                )}</Button>
                                             <Button variant='none' className="cancelBtn" onClick={handleCancel}>Cancel</Button>
                                         </div>
                                     </Form>

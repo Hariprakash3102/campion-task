@@ -1,35 +1,40 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row,Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
-import { postApi } from "../ApiCall/Apicall";
+import { postApi } from "./Apicall";
 import { Formik } from "formik";
 import * as Yup from 'yup';
-import { useGetRtkQuery, usePostRtkMutation } from "../../slices/slices";
+import { useGetRtkQuery, usePostRtkMutation } from "../../RtkQuery/slices";
+import '../../Css/CreateApi.css'
 
 const CreateApi = () => {
     const initialValues = { title: '', price: 0, description: '', images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtzxjfMjne_J9GwgLaaU-NMgD2D0CWPKzVlg&s'], categoryId: 0, };
     // const [data, SetData] = useState([]);
+    const [submit , setSubmit] = useState(false);
     const nav = useNavigate();
-    const [postItem] = usePostRtkMutation();
-    const {refetch} = useGetRtkQuery();
+
+    const [postItem] = usePostRtkMutation(); 
 
 
     const handleCreate = async (values) => {
         try{
+            setSubmit(true);
             await postItem(values).unwrap();
-            Swal.fire({ position: "top-center", icon: "success",
-                 title: "saved", showConfirmButton: false, timer: 1500 });
-            refetch();
-            nav('/Dashboard/UserList');  
+            Swal.fire({ position: "top-center", icon: "success", title: "saved", showConfirmButton: false, timer: 1500 });
+            nav('/Dashboard/UserList');    
         }
         catch(e) {
+            setSubmit(true);
             console.error(e);
             Swal.fire({ position: "top-center", icon: "danger",
                 title: "Try again", showConfirmButton: false, timer: 1500 });
+         }
+         finally{
+            setSubmit(false);
          }
     };
 
@@ -135,15 +140,23 @@ const CreateApi = () => {
                                             {/* <Form.Control.Feedback type="invalid">{errors.categoryId}</Form.Control.Feedback> */}
                                         </Form.Group>
                                         <div className="d-flex justify-content-center">
-                                            <Button className="mx-2 border-0 bg-dark" type="submit">Create</Button>
-                                            <Button variant='none' style={{ border: '2px solid #8f958c', color: '#8f958c' }} onClick={handleCancel}>Cancel</Button>
+                                            <Button className="mx-2 border-0 bg-dark" type="submit" disabled={submit}>
+                                                {submit ? (
+                                                    <>
+                                                        <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                                                        Creating...
+                                                    </>
+                                                ) : (
+                                                    'Create'
+                                                )}
+                                            </Button>
+                                            <Button variant='none' className="cancelStyle" style={{ border: '2px solid #8f958c', color: '#8f958c' }} onClick={handleCancel}>Cancel</Button>
                                         </div>
                                     </Form>
                                 )}
                             </Formik>
                         </Col>
-                    </Row>
-
+                    </Row> 
                 </Col>
             </Row>
         </div>

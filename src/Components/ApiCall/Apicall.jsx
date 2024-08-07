@@ -1,4 +1,4 @@
-import axiosInstance from "../AxiosInstance/AxiosInstance";
+import axiosInstance from "./AxiosInstance";
 
 export const getApi = () => {
   return axiosInstance.get("/");

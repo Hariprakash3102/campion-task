@@ -7,12 +7,13 @@ import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { Icon } from "@iconify/react/dist/iconify.js"; 
 import { getidApi } from "../ApiCall/Apicall";
 import moment from "moment";
-import { useGetidRtkQuery } from "../../slices/slices";
+import { useGetidRtkQuery } from "../../RtkQuery/slices";
 
 const UserDetails = () => {
 
     const {Id}= useParams(); 
-    const {data,error,isLoading} = useGetidRtkQuery(Id);
+    const {data,error,isLoading,refetch} = useGetidRtkQuery(Id);
+//future reference
     // const [data,SetData] = useState(""); 
     // const [loading,SetLoading] = useState(true); 
     // const [error,SetError] = useState(""); 
@@ -31,6 +32,10 @@ const UserDetails = () => {
     //     }; 
     //     ProductDetails();
     // },[Id]) 
+
+    useEffect( () => {
+        refetch();
+    },[Id])
 
     if(isLoading){
         return(
@@ -54,7 +59,10 @@ const UserDetails = () => {
 
                 <Col xs={12} lg={9} xl={10} className=' m-0 p-0 '>
                     {/* nav bar start */}
-                    <Navbar /> 
+                    <div className="sticky-top">
+                        <Navbar />
+                    </div>
+                    {/* <Navbar />  */}
                     {/* navbar end */} 
                     <div className=" align-items-center mt-5" >
                         <h2 className="text-center ">User Details</h2> 
@@ -68,7 +76,7 @@ const UserDetails = () => {
                             {data.images.map((image, index) => (
                             <li key={index} className="mx-2">
                                 <img src={image} alt={`Item image ${index + 1}`} width="200" />
-                            </li>
+                            </li>       
                             ))}
                         </ul>
                         <p>Creation At: { moment(new Date(data.creationAt).toLocaleString()).format('L')   }</p>

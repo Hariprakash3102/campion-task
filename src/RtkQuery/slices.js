@@ -29,11 +29,14 @@ export const rtkQuery = createApi({
                 url: `/products/${id}`,
                 method: 'DELETE', 
             })
+        }),
+        paginateRtk: builder.query ({
+            query : ({offset,limit }) => `/products?offset=${offset}&limit=${limit}`, 
         })
     }),
 });
 
-export const { useGetRtkQuery, useGetidRtkQuery, usePostRtkMutation, useDeleteRtkMutation, usePutRtkMutation } = rtkQuery;
+export const { useGetRtkQuery, useGetidRtkQuery, usePostRtkMutation, useDeleteRtkMutation, usePutRtkMutation, usePaginateRtkQuery } = rtkQuery;
 
 
 

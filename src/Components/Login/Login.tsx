@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "../Css/Login.css";
-import logo from "../Assets/logo.png";
-import { Formik } from "formik";
+import "../../Css/Login.css";
+import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+// import logo from "../Assets/logo.png" assert { type: "image/png" };
 import axios from "axios";
-import LoginForm from "./LoginForm";
+import LoginForm from "./LoginForm.tsx";
+import { server } from "typescript";
 
 const gmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 // const password = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)[A-Za-z\d!@#$%^&*]{6,20}$/;
@@ -23,37 +24,53 @@ const validSchema = Yup.object().shape({
   // .test('has-digit', 'Password must have at least one digit', value => /\d/.test(value))
   // .test('has-special-char', 'Password must have at least one special character', value => /[!@#$%^&*]/.test(value))
 });
+interface formInput{
+     email: string ;
+     password: string;
 
-const Login = () => {
+}
+
+const logo = require("../../Assets/logo.png") as string;
+
+const Login: React.FC = () => {
   const [showpassword, SetShowpasword] = useState(true);
   const handlepasswordShow = () => SetShowpasword(!showpassword);
+   const [serverError, setServerError] = useState<string>("");
   const nav = useNavigate();
 
   // useEffect(() => {
   //   localStorage.removeItem('1st_token');
   // }, []);
 
+  const initialValues: formInput = { email: "", password: "" }
+
+  const onSubmit =async (
+    values: formInput,
+    {setErrors} : FormikHelpers<formInput>
+  ) => {
+    try {
+      setServerError("");
+      //token generate
+      const response = await axios.post("https://api.escuelajs.co/api/v1/auth/login", {
+        email: values.email,
+        password: values.password
+      })
+      if (response.data.access_token) {
+        sessionStorage.setItem('1st_token', response.data.access_token);
+        nav('/Dashboard');
+      }
+      else setServerError(  'Invalid credentials' )
+    }
+    catch (e) {
+      setServerError('Error in logging in: please try again' )
+    }
+  }
+  
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues ={initialValues}
       validationSchema={validSchema}
-      onSubmit={async (values, { setError }) => {
-        try {
-          //token generate
-          const response = await axios.post("https://api.escuelajs.co/api/v1/auth/login", {
-            email: values.email,
-            password: values.password
-          })
-          if (response.data.access_token) {
-            localStorage.setItem('1st_token', response.data.access_token);
-            nav('/Dashboard');
-          }
-          else setError({ server: 'invalid credentials' })
-        }
-        catch (e) {
-          setError({ server: 'Error in logging in : please try again' })
-        }
-      }}
+      onSubmit={onSubmit}
     >
       {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
         <div className="vh-100 d-flex justify-content-center align-items-center bgimg">
@@ -67,14 +84,14 @@ const Login = () => {
               <LoginForm
                 errors={errors}
                 touched={touched}
-                handlepasswordShow={handlepasswordShow}
-                showpassword={showpassword}
+                handlePasswordShow={handlepasswordShow}
+                showPassword={showpassword}
                 values={values}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 handleSubmit={handleSubmit}
               />
-              {errors.server && <div className="error-message text-danger text-center">{errors.server}</div>}
+              {serverError && <div className="error-message text-danger text-center">{serverError}</div>}
               <div className="row py-3">
                 <div className="col-12 col-md-6 pe-0">
                   <input type="checkbox" className="me-2" />

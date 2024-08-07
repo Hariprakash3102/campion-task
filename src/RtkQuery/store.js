@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit' 
-import { rtkQuery } from '../slices/slices'
+import { rtkQuery } from './slices'
 
 export const store = configureStore({
     reducer : {
@@ -10,3 +10,4 @@ export const store = configureStore({
         getDefaultMiddleware().concat(rtkQuery.middleware),
 });
 
+           
