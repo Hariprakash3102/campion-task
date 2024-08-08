@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import {Link, useParams } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebar";
-import Navbar from "../Navbar/Navbar";
 import Table from 'react-bootstrap/Table';
 import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { Icon } from "@iconify/react/dist/iconify.js"; 
 import { getidApi } from "../ApiCall/Apicall";
 import moment from "moment";
 import { useGetidRtkQuery } from "../../RtkQuery/slices";
+import Sidebar from "../sidebar/Sidebar";
+import Navbar  from "../navbar/Navbar";
 
 const UserDetails = () => {
 
     const {Id}= useParams(); 
     const {data,error,isLoading,refetch} = useGetidRtkQuery(Id);
+
 //future reference
     // const [data,SetData] = useState(""); 
     // const [loading,SetLoading] = useState(true); 

@@ -12,7 +12,7 @@ import { TableHeader } from "../../constant/data";
 // import { deleteApi } from "../ApiCall/Apicall"; //future refrence
 import ReactPaginate from 'react-paginate';
 // import { useDispatch, useSelector } from 'react-redux'; //future refrence
-import {useDeleteRtkMutation, useGetRtkQuery,usePaginateRtkQuery } from '../../RtkQuery/slices';
+import {useDeleteRtkMutation, useGetRtkQuery,usePaginateRtkQuery } from '../../Redux/slices';
 
 const UserList: React.FC = () => { 
 

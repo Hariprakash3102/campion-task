@@ -1,14 +1,14 @@
-import Sidebar from "../Sidebar/Sidebar";
-import Navbar from "../Navbar/Navbar";
+
 import Swal from "sweetalert2";
 import '../../Css/EditApi.css'
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Form, Navbar, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { getidApi, putApi } from "../ApiCall/Apicall";
+import { getidApi, putApi } from "./Apicall";
 import { Formik } from "formik";
 import * as Yup from 'yup';
-import { useGetidRtkQuery, useGetRtkQuery, usePutRtkMutation } from "../../RtkQuery/slices";
+import { useGetidRtkQuery, useGetRtkQuery, usePutRtkMutation } from "../Redux/slices";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 const EditApi = () => {
 
